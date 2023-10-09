@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>CMPT 276</title>
 </head>
 <body>
-    <h1>header</h1>
+    <h1>CMPT 276 summarizer</h1>
 
+    <!-- Login stuff -->
+    <!-- Sessions should hold user api keys 
+        instead of needing to input manually -->
     <form>
         <fieldset>
         <legend>Login (To do later)</legend>
@@ -15,16 +18,14 @@
         <input type="submit" value="submit">
         </fieldset>
     </form>
-    <section id="log">
-        <h2>Chat log</h2>
 
-        
+    <!-- Chat gpt response -->
+    <section id="response">
+        <h2>response</h2>
         <div class="result">{{ result }}</div><br>
-
-
     </section>
 
-
+    <!-- Way to interact with chat gpt -->
     <form action="/" method="post">
         Insert API key: <input type="text" name="api_key"><br>
         <textarea rows="4" cols="50" name="chatbox" placeholder="Input chatgpt request"></textarea>

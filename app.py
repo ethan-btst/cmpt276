@@ -1,8 +1,6 @@
 from flask import Flask
 from flask import *
 from chat_request import text_request
-# from chat_request import youtube_request
-
 app = Flask(__name__)
 
 @app.route("/",methods=("GET","POST"))

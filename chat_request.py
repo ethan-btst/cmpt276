@@ -9,6 +9,7 @@ load_dotenv()
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
+# Test function to check if api key is valid
 def is_api_key_valid():
     try:
         response = openai.Completion.create(
@@ -21,13 +22,22 @@ def is_api_key_valid():
     else:
         return True
 
-def text_request(user_in, type,api_key):
+
+# Takes a request and gets chat gpt to respond
+def text_request(user_in, type, api_key):
+
+    # Checks for environment variables
+    # If you have .env and an API key you don't need to manually insert
+    # Otherwise, get from the website
     if(os.getenv("OPENAI_API_KEY")==None):
         openai.api_key = api_key
 
+    # Check the key
     if(not is_api_key_valid()):
        return "Not a valid key"
     
+
+
     if(type == "text"):
         prompt = user_in
 
