@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>header</h1>
+
+    <form>
+        <fieldset>
+        <legend>Login (To do later)</legend>
+        Username <input id="uname" type="text">
+        <input type="submit" value="submit">
+        </fieldset>
+    </form>
+    <section id="log">
+        <h2>Chat log</h2>
+
+        
+        <div class="result">{{ result }}</div>
+
+
+    </section>
+
+
+    <form action="/" method="post">
+        <textarea rows="4" cols="50" name="chatbox" placeholder="Input chatgpt request"></textarea>
+        <p>
+            <input type="submit" value="Submit">
+            <select name="type">
+                <option value="text">text</option>
+                <option value="youtube">youtube</option>
+            </select>
+        </p>
+    </form>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
