@@ -31,9 +31,6 @@ def text_request(user_in, type):
     return(response.choices[0].text)
 
 
-print(text_request("bBQVR4epfBQ&pp=ygUScGVydW4gcmVxdWlyZW1lbnRz","youtube"))
-
-
 # test video id: bBQVR4epfBQ&pp=ygUScGVydW4gcmVxdWlyZW1lbnRz
 
 # def youtube_request(video_id):
