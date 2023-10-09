@@ -7,7 +7,7 @@ git clone git@github.com:ethan-btst/cmpt276.git
 cd cmpt276
 ```
 
-1. Set up the virtual environment using:
+2. Set up the virtual environment using:
 ```
 python -m venv venv
 .\venv\Scripts\activate
