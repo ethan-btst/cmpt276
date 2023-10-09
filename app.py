@@ -10,8 +10,9 @@ def chat():
     if request.method == "POST":
         user_in = request.form["chatbox"]
         type = request.form["type"]
+        api_key = request.form["api_key"]
 
-        response = text_request(user_in,type)
+        response = text_request(user_in,type,api_key)
         return redirect(url_for("chat",result=response))
 
     result = request.args.get("result")

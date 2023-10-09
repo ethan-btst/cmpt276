@@ -9,8 +9,25 @@ load_dotenv()
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-def text_request(user_in, type):
+def is_api_key_valid():
+    try:
+        response = openai.Completion.create(
+            engine="davinci",
+            prompt="This is a test.",
+            max_tokens=5
+        )
+    except:
+        return False
+    else:
+        return True
 
+def text_request(user_in, type,api_key):
+    if(os.getenv("OPENAI_API_KEY")==None):
+        openai.api_key = api_key
+
+    if(not is_api_key_valid()):
+       return "Not a valid key"
+    
     if(type == "text"):
         prompt = user_in
 
@@ -29,22 +46,3 @@ def text_request(user_in, type):
     )
 
     return(response.choices[0].text)
-
-
-# test video id: bBQVR4epfBQ&pp=ygUScGVydW4gcmVxdWlyZW1lbnRz
-
-# def youtube_request(video_id):
-#     transcript = YouTubeTranscriptApi.get_transcript(video_id)
-#     formatter = TextFormatter()
-
-
-#     transcript_text = formatter.format_transcript(transcript)
-
-#     response = openai.Completion.create(
-#         model="text-davinci-003",
-#         prompt = "Summarize this transcript" + transcript_text[0:3000],
-#         temperature=0.6,
-#         max_tokens=50,
-#     )
-
-#     return(response.choices[0].text)

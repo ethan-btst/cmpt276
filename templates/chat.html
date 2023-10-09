@@ -19,16 +19,17 @@
         <h2>Chat log</h2>
 
         
-        <div class="result">{{ result }}</div>
+        <div class="result">{{ result }}</div><br>
 
 
     </section>
 
 
     <form action="/" method="post">
+        Insert API key: <input type="text" name="api_key"><br>
         <textarea rows="4" cols="50" name="chatbox" placeholder="Input chatgpt request"></textarea>
         <p>
-            <input type="submit" value="Submit">
+            <input type="submit" value="Submit" >
             <select name="type">
                 <option value="text">text</option>
                 <option value="youtube">youtube</option>
