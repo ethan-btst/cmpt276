@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import *
 from chat_request import text_request
-from chat_request import youtube_request
+# from chat_request import youtube_request
 
 app = Flask(__name__)
 
@@ -9,12 +9,9 @@ app = Flask(__name__)
 def chat():
     if request.method == "POST":
         user_in = request.form["chatbox"]
+        type = request.form["type"]
 
-        if(request.form["type"] == "youtube"):
-            response = youtube_request(user_in)
-        
-        else:
-            response = text_request(user_in)
+        response = text_request(user_in,type)
         return redirect(url_for("chat",result=response))
 
     result = request.args.get("result")
