@@ -1,0 +1,128 @@
+.NBar{
+    background-color:#000000; padding-right: 15px; padding-left: 15px;
+    font-size: 50px;
+    font-family: 'Raleway', sans-serif;
+}
+.NBarDiv{
+    display: flex; align-items: center; justify-content: space-between;
+
+
+}
+
+.TxTOnBar a{
+    font-size:45px; font-weight: 600; color:white;
+    margin-left: 105px;padding-bottom: 10px;margin-bottom: 30px;
+}
+li{
+    list-style: none; display: inline-block;
+
+}
+li a{
+    color:white; font-size: 30px; font-weight: cold; margin-right: 65px;
+}
+
+
+
+
+
+
+
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #199c77;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+/* Login Form Styles */
+form {
+    width: 300px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+    font-family: 'Raleway', sans-serif;
+}
+
+fieldset {
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-family: 'Raleway', sans-serif;
+}
+
+legend {
+    font-weight: bold;
+    font-family: 'Raleway', sans-serif;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-family: 'Raleway', sans-serif;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+input[type="submit"] {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Raleway', sans-serif;
+}
+
+.result {
+    font-size: 18px;
+    margin: 0;
+    font-family: 'Raleway', sans-serif;
+}
+
+/* Interaction Form Styles */
+form[action="/"] {
+    background-color: #fff;
+    width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    font-family: 'Raleway', sans-serif;
+}
+
+input[type="text"][name="api_key"],
+textarea[name="chatbox"] {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-family: 'Raleway', sans-serif;
+}
+
+select[name="type"] {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-family: 'Raleway', sans-serif;
+}
+
+/* Notes Styles */
+h4 {
+    margin-top: 20px;
+}
+
+p {
+    margin: 0;
+}
