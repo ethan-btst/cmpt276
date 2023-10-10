@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CMPT 276 User: {{userResponse}}</title>
+    <title>CMPT 276 </title>
 
 
 
@@ -23,7 +23,7 @@
 
     <nav class="NBar">
         <div class="NBarDiv">
-            <div class="TxTOnBar"><a href="#">Project Name</a> </div>
+            <div class="TxTOnBar"><a href="#">Project Name </a> </div>
             <u1>
                 <li><a href="#">Text</a></li>
                 <li><a href="#">Youtube Video</a></li>
@@ -46,7 +46,7 @@
 
     <!-- Way to interact with chat gpt -->
     <form action="/chat" method="post">
-        Insert API key: <input type="text" name="api_key"><br>
+        User: {{userResponse}}, Please enter your API key  <input type="text" name="api_key"><br>
         <textarea rows="4" cols="50" name="chatbox" placeholder="Input chatgpt request"></textarea>
         <p>
             <input type="submit" value="Submit" >
