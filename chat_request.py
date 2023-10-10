@@ -2,12 +2,16 @@ import openai
 import os
 from dotenv import load_dotenv
 
+import json
+import requests
+
 from youtube_transcript_api import YouTubeTranscriptApi
 from youtube_transcript_api.formatters import TextFormatter
 
 load_dotenv()
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
+rapidapi_key = os.getenv("RAPIDAPI_KEY")
 
 # Test function to check if api key is valid
 def is_api_key_valid():
@@ -45,7 +49,21 @@ def text_request(user_in, type, api_key):
         transcript = YouTubeTranscriptApi.get_transcript(user_in)
         formatter = TextFormatter()
         prompt = "Summarize this video transcript in 200 words" + formatter.format_transcript(transcript)[0:3500]
-        
+    elif(type == 'article'):
+        apiurl = "https://news-article-extraction.p.rapidapi.com/"
+        # payload = { "url": "https://edition.cnn.com/2020/06/30/tech/facebook-ad-business-boycott/index.html" }
+        payload = { "url": user_in}
+        headers = {
+            "content-type": "application/json",
+            "X-RapidAPI-Key": rapidapi_key,
+            "X-RapidAPI-Host": "news-article-extraction.p.rapidapi.com"
+        }
+
+        res = requests.post(apiurl, json=payload, headers=headers)
+        data = res.json()
+        articleContent = data['content']
+        prompt = 'summarize this article '+ articleContent
+
 
 
     response = openai.Completion.create(

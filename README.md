@@ -19,3 +19,5 @@ flask run
    
    In .env put:
    > OPENAI_API_KEY = _your api key_
+   RAPIDAPI_KEY = _your_api_key_
+
