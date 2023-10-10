@@ -3,7 +3,7 @@
 ## Setup locally
 1. Clone repository to your system and enter it
 ```
-git clone git@github.com:ethan-btst/cmpt276.git
+git clone https://github.com/ethan-btst/cmpt276.git
 cd cmpt276
 ```
 
