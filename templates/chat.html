@@ -20,10 +20,50 @@
 
 </head>
 <body>
+    <div class="Navbar">
 
+    <ul>
+
+       <!-- <div class="Name"><a>In a Nutshell</a></div> -->
+
+        <li> <a href="#"> Home </a></li>
+        <li> <a href="#"> Tools &#x25BE; </a>
+            <ul class="dropdown1">
+                <li> <a href="#"> Text File </a></li>
+                <li> <a href="#"> Youtube Video </a></li>
+                <li> <a href="#"> Audio File </a></li>
+            </ul>
+        </li>
+
+
+        <li> <a href="#"> About Us &#x25BE; </a>
+
+            <ul class="dropdown2">
+                <li> <a href="#"> Vincent </a></li>
+                <li> <a href="#"> Ethan </a></li>
+                <li> <a href="#"> Iain</a></li>
+                <li> <a href="#"> Hugo</a></li>
+                <li> <a href="#"> Darren</a></li>
+                <li> <a href="#"> Alex</a></li>
+            </ul>
+
+        </li>
+
+        <li> <a href="#"> Contact Us </a></li>
+    </ul>
+    </div>
+
+
+
+
+
+
+
+
+    <!--
     <nav class="NBar">
         <div class="NBarDiv">
-            <div class="TxTOnBar"><a href="#">Project Name </a> </div>
+            <div class="TxTOnBar"><a>Project Name </a> </div>
             <u1>
                 <li><a href="#">Text</a></li>
                 <li><a href="#">Youtube Video</a></li>
@@ -32,6 +72,9 @@
             </u1>
         </div>
     </nav>
+-->
+    <!-- Little Background design-->
+
 
 
     <!-- Login stuff -->
@@ -50,7 +93,7 @@
         <textarea rows="4" cols="50" name="chatbox" placeholder="Input chatgpt request"></textarea>
         <p>
             <input type="submit" value="Submit" >
-            <select name="type" id="request_type">
+            <select name="type">
                 <option value="text">text</option>
                 <option value="youtube">youtube</option>
                 <option value="article">article</option>
@@ -58,9 +101,11 @@
         </p>
     </form>
 
-    <h4>Usage notes</h4>
-    <p id="usage notes"></p>
+    <h4>Notes</h4>
+    <p>For the youtube option, put only the id <br>
+       example: id in https://www.youtube.com/watch?v=bBQVR4epfBQ&pp=ygUScGVydW4gcmVxdWlyZW1lbnRz is: <br>
+       bBQVR4epfBQ&pp=ygUScGVydW4gcmVxdWlyZW1lbnRz</p>
 
-    <script src={{ url_for( 'static', filename="js/chat.js") }}></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
