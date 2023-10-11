@@ -51,11 +51,14 @@ def chat():
 
     # Processes chat request
     if request.method == "POST":
-        user_in = request.form["chatbox"]
-        type = request.form["type"]
-        api_key = request.form["api_key"]
-
-        session["current_response"] = text_request(user_in,type,api_key)
+        if request.form["submit"] == "Submit":
+            user_in = request.form["chatbox"]
+            type = request.form["type"]
+            api_key = request.form["api_key"]
+            session["current_response"] = text_request(user_in,type,api_key)
+        
+        else:
+            session["current_response"] = ""
         return redirect(request.path)
 
     # Display result to page

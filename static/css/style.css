@@ -181,6 +181,16 @@ input[type="submit"] {
     font-family: 'Raleway', sans-serif;
 }
 
+input[type="submit"][value="Clear response"] {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Raleway', sans-serif;
+    float:right;
+}
+
 .result {
     font-size: 18px;
     margin: 0;
@@ -206,6 +216,7 @@ textarea[name="chatbox"] {
     border: 1px solid #ccc;
     border-radius: 3px;
     font-family: 'Raleway', sans-serif;
+    resize: none;
 }
 
 select[name="type"] {

@@ -81,26 +81,30 @@
     <!-- Sessions should hold user api keys 
         instead of needing to input manually -->
 
-    <!-- Chat gpt response -->
-    <section id="response">
+    <!-- Chat gpt response
+         empty if no response is given  -->
+    {% if result %}
+    <section id="Response">
         <h2>response</h2>
         <div class="result">{{ result }}</div><br>
     </section>
+    {% endif %}
 
     <!-- Way to interact with chat gpt -->
     <form action="/chat" method="post">
         User: {{userResponse}}, Please enter your API key  <input type="text" name="api_key"><br>
         <textarea rows="4" cols="50" name="chatbox" placeholder="Input chatgpt request"></textarea>
         <p>
-            <input type="submit" value="Submit" >
             <select name="type" id="request_type">
                 <option value="text">text</option>
                 <option value="youtube">youtube</option>
                 <option value="article">article</option>
             </select>
-        </p>
+        </p><br>
+            <input type="submit" name="submit" value="Submit" >
+            <input type="submit" name="submit" value="Clear response">
     </form>
-
+    
     <h4>Notes</h4>
     <p id="usage notes"></p>
 
