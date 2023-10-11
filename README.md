@@ -14,6 +14,14 @@ python -m venv venv
 pip install -r requirements.txt
 flask run
 ```
+2. Or when debugging (So you don't have to restart flask server after changes):
+```
+python -m venv venv
+.\venv\Scripts\activate
+pip install -r requirements.txt
+flask --app app.py --debug run
+```
+
 
 3. Create the '.env' for the your api key
    
