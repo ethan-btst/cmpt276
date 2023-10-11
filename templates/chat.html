@@ -1,64 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CMPT 276</title>
 
+    <link rel="stylesheet" href="../static/css/style.css" />
 
-
-    <link rel="stylesheet" href="../static/css/style.css">
-
-
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap"
-     rel="stylesheet">
-
-
-
-</head>
-<body>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <div class="Navbar">
+      <ul>
+        <!-- <div class="Name"><a>In a Nutshell</a></div> -->
 
-    <ul>
-
-       <!-- <div class="Name"><a>In a Nutshell</a></div> -->
-
-        <li> <a href="#"> Home </a></li>
-        <li> <a href="#"> Tools &#x25BE; </a>
-            <ul class="dropdown1">
-                <li> <a href="#"> Text File </a></li>
-                <li> <a href="#"> Youtube Video </a></li>
-                <li> <a href="#"> Audio File </a></li>
-            </ul>
+        <li><a href="#"> Home </a></li>
+        <li>
+          <a href="#"> Tools &#x25BE; </a>
+          <ul class="dropdown1">
+            <li><a href="#"> Text File </a></li>
+            <li><a href="#"> Youtube Video </a></li>
+            <li><a href="#"> Audio File </a></li>
+          </ul>
         </li>
 
+        <li>
+          <a href="#"> About Us &#x25BE; </a>
 
-        <li> <a href="#"> About Us &#x25BE; </a>
-
-            <ul class="dropdown2">
-                <li> <a href="#"> Vincent </a></li>
-                <li> <a href="#"> Ethan </a></li>
-                <li> <a href="#"> Iain</a></li>
-                <li> <a href="#"> Hugo</a></li>
-                <li> <a href="#"> Darren</a></li>
-                <li> <a href="#"> Alex</a></li>
-            </ul>
-
+          <ul class="dropdown2">
+            <li><a href="#"> Vincent </a></li>
+            <li><a href="#"> Ethan </a></li>
+            <li><a href="#"> Iain</a></li>
+            <li><a href="#"> Hugo</a></li>
+            <li><a href="#"> Darren</a></li>
+            <li><a href="#"> Alex</a></li>
+          </ul>
         </li>
 
-        <li> <a href="#"> Contact Us </a></li>
-    </ul>
+        <li><a href="#"> Contact Us </a></li>
+      </ul>
     </div>
-
-
-
-
-
-
-
 
     <!--
     <nav class="NBar">
@@ -75,8 +61,6 @@
 -->
     <!-- Little Background design-->
 
-
-
     <!-- Login stuff -->
     <!-- Sessions should hold user api keys 
         instead of needing to input manually -->
@@ -85,30 +69,38 @@
          empty if no response is given  -->
     {% if result %}
     <section id="Response">
-        <h2>response</h2>
-        <div class="result">{{ result }}</div><br>
+      <h2>response</h2>
+      <div class="result">{{ result }}</div>
+      <br />
     </section>
     {% endif %}
 
     <!-- Way to interact with chat gpt -->
     <form action="/chat" method="post">
-        Hello {{userResponse}}, enter your API key  <input type="text" name="api_key"><br>
-        <textarea rows="4" cols="50" name="chatbox" placeholder="Input chatgpt request"></textarea>
-        <p>
-            <select name="type" id="request_type">
-                <option value="text">text</option>
-                <option value="youtube">youtube</option>
-                <option value="article">article</option>
-            </select>
-        </p><br>
-            <input type="submit" name="submit" value="Submit" >
-            <input type="submit" name="submit" value="Clear response">
+      Hello {{userResponse}}, enter your API key
+      <input type="text" name="api_key" /><br />
+      <textarea
+        rows="4"
+        cols="50"
+        name="chatbox"
+        placeholder="Input chatgpt request"
+      ></textarea>
+      <p>
+        <select name="type" id="request_type">
+          <option value="text">text</option>
+          <option value="youtube">youtube</option>
+          <option value="article">article</option>
+        </select>
+      </p>
+      <br />
+      <input type="submit" name="submit" value="Submit" />
+      <input type="submit" name="submit" value="Clear response" />
     </form>
-    
+
     <h4>Notes</h4>
     <p id="usage notes"></p>
 
     <script src="../static/js/chat.js"></script>
     <script src="js/script.js"></script>
-</body>
+  </body>
 </html>
