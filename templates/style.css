@@ -1,3 +1,111 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Raleway', sans-serif;
+}
+
+.Navbar{
+    background-color: orange;
+
+}
+
+
+body{
+    background-color: orange ;
+
+}
+
+
+ul{
+    list-style: none;
+    background-color: #333;
+    text-align: center;
+
+
+}
+
+ul li{
+    display: inline-block;
+    position: relative;
+}
+ul li a{
+    display: block;
+    padding: 20px 25px;
+    font-size: 20px;
+    color: #FFF;
+    text-decoration: none;
+    text-align: center;
+}
+
+ul li ul.dropdown1 li{
+    display: block;
+    background: #333;
+    margin: 2px 0px;
+}
+
+ul li ul.dropdown1{
+    width: auto;
+    background: orange;
+    position: absolute;
+    z-index: 999;
+    display: none;
+}
+
+ul li a:hover {
+    background: #222;
+}
+
+ul li:hover ul.dropdown1{
+    display: block;
+}
+
+
+
+ul li ul.dropdown2 li{
+    display: block;
+    background: #333;
+    margin: 2px 0px;
+}
+
+ul li ul.dropdown2{
+    width: auto;
+    background: orange;
+    position: absolute;
+    z-index: 999;
+    display: none;
+}
+
+ul li a:hover {
+    background: #222;
+}
+
+ul li:hover ul.dropdown2{
+    display: block;
+}
+
+.Name a {
+    font-size: 45px;
+    font-weight: 600;
+    color: white;
+    margin-left: 10px; /* Adjust the margin-left to control its position from the left */
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+    text-align: left; /* Add this line to align the text to the left */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
 .NBar{
     background-color:#000000; padding-right: 15px; padding-left: 15px;
     font-size: 50px;
@@ -21,23 +129,13 @@ li a{
     color:white; font-size: 30px; font-weight: cold; margin-right: 65px;
 }
 
+*/
 
 
 
 
 
 
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #199c77;
-    margin: 0;
-    padding: 0;
-}
-
-
-
-/* Login Form Styles */
 form {
     width: 300px;
     margin: 20px auto;
@@ -89,7 +187,7 @@ input[type="submit"] {
     font-family: 'Raleway', sans-serif;
 }
 
-/* Interaction Form Styles */
+
 form[action="/"] {
     background-color: #fff;
     width: 400px;
@@ -118,7 +216,7 @@ select[name="type"] {
     font-family: 'Raleway', sans-serif;
 }
 
-/* Notes Styles */
+
 h4 {
     margin-top: 20px;
 }
@@ -126,3 +224,5 @@ h4 {
 p {
     margin: 0;
 }
+
+
