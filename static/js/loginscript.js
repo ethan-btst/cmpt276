@@ -3,7 +3,6 @@ const username = document.getElementById('username');
 const password = document.getElementById('password');
 
 loginButton.addEventListener('click', (event) => {
-  event.preventDefault();
   if (username.value.trim() == ''){
     error(username)
   }
@@ -19,6 +18,7 @@ loginButton.addEventListener('click', (event) => {
 /*indicators*/
 function error(element){
   element.style.border = '3px red solid';
+  preventDefault();
 }
 function pass(element){
   element.style.border = '3px green solid';

@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CMPT 276 </title>
+    <title>CMPT 276</title>
 
 
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../static/css/style.css">
 
 
 
@@ -93,7 +93,7 @@
         <textarea rows="4" cols="50" name="chatbox" placeholder="Input chatgpt request"></textarea>
         <p>
             <input type="submit" value="Submit" >
-            <select name="type">
+            <select name="type" id="request_type">
                 <option value="text">text</option>
                 <option value="youtube">youtube</option>
                 <option value="article">article</option>
@@ -102,10 +102,9 @@
     </form>
 
     <h4>Notes</h4>
-    <p>For the youtube option, put only the id <br>
-       example: id in https://www.youtube.com/watch?v=bBQVR4epfBQ&pp=ygUScGVydW4gcmVxdWlyZW1lbnRz is: <br>
-       bBQVR4epfBQ&pp=ygUScGVydW4gcmVxdWlyZW1lbnRz</p>
+    <p id="usage notes"></p>
 
+    <script src="../static/js/chat.js"></script>
     <script src="js/script.js"></script>
 </body>
 </html>

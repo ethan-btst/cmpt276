@@ -5,8 +5,9 @@
 // <select name="type" id="request_type">
 //                <option value="text">text</option> 
 //                <option value="youtube"...
-var usage_notes ={
-    "text" : "General chatgpt request, need to write 'Summarize the bible' in full",
+const usage_notes ={
+    "text" : "General chatgpt request, need to write<br>"+
+             "example: 'Summarize the bible'",
 
     "youtube" : "Use only the the youtube id <br> " + 
                 "example: \"www.youtube.com/watch?v=bBQVR4epfBQ&pp=ygUScGVydW4gcmVxdWlyZW1lbnRz\" <br> " +
