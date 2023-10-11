@@ -10,13 +10,25 @@ def index():
 
 @app.route('/chat',methods=("GET","POST"))
 def chat():
+
+    # Redirect if not logged in
+    if 'username' not in session:
+        return redirect("login")
+
+    # Set a default empty response
+    if 'current_response' not in session:
+        session["current_response"] = '' 
+
     if request.method == "POST":
         user_in = request.form["chatbox"]
         type = request.form["type"]
         api_key = request.form["api_key"]
 
-        response = text_request(user_in,type,api_key)
-        return redirect(url_for("chat",result=response))
+        session["current_response"] = text_request(user_in,type,api_key)
+        return redirect(request.path)
+
+    if request.method == "GET":
+        return render_template("chat.html",result=session['current_response'],userResponse=session['username'])
 
     result = request.args.get("result")
     return render_template("chat.html", result=result, userResponse=session['username'])
