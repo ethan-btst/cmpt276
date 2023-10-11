@@ -2,10 +2,26 @@
 <html>
 <head>
     <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/static/css/admin.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 </head>
 <body>
-    <h1>Welcome to the Admin Dashboard</h1>
-
+    <h1>Admin Dashboard</h1>
+    <div id = "traffic">
+        <div class = "trafficCol">
+            Total Visits <br><br>
+            <div id = "totalVisit">12345(Changed by js)</div>
+        </div>
+        <div class = "trafficCol">
+            Total Vistits Today <br><br>
+            <div id = "totalVisitToday">12345(Changed by js)</div>
+        </div>
+        <div class = "trafficCol">
+            Visits Last 7 Days
+            <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+            <script src="/static/js/chart.js"></script>
+        </div>
+    </div>
     <div>
         <h2>Admin Actions (unimplemented routes)</h2>
         <ul>
@@ -14,5 +30,7 @@
             <!-- Add more admin actions as needed -->
         </ul>
     </div>
+</body>
+</html>
 
     <!-- You can add additional content specific to the admin dashboard

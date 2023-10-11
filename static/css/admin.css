@@ -1,0 +1,11 @@
+.trafficCol {
+  float: left;
+  width: 33.33%;
+  font-size: large;
+  height: 150px;
+}
+#traffic:after {
+  content: "";
+  display: table;
+  clear: both;
+}
