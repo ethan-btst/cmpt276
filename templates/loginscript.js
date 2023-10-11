@@ -1,5 +1,6 @@
 const loginButton = document.getElementById('loginButton')
 const username = document.getElementById('username');
+const password = document.getElementById('password');
 
 loginButton.addEventListener('click', (event) => {
   event.preventDefault();
@@ -8,6 +9,11 @@ loginButton.addEventListener('click', (event) => {
   }
   else
     pass(username)
+  if (password.value.trim() == ''){
+    error(password)
+  }
+  else
+    pass(password)
 });
 
 /*indicators*/
