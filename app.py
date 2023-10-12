@@ -12,6 +12,10 @@ def index():
 # Login page
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    if 'username' in session: 
+        print('logged in user trying to login') 
+        return redirect(url_for('chat'))
+
     if request.method == 'POST':
         # Handle the login form submission
         username = request.form['username']
