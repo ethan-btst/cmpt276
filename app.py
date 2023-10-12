@@ -4,6 +4,11 @@ from chat_request import text_request
 app = Flask(__name__)
 app.secret_key = 'your_secret_key' #needed for sessions
 
+# 404 Not found page error
+@app.errorhandler(404)
+def notfound(e):
+    return render_template("404.html")
+
 # Homepage, redirects to login page
 @app.route('/')
 def index():
@@ -42,11 +47,6 @@ def admin():
         return redirect(url_for('index'))
 
     return render_template('admin.html')
-
-# 404 Not found page error
-@app.errorhandler(404)
-def notfound(e):
-    return render_template("404.html")
 
 # Page for chat
 @app.route('/chat',methods=("GET","POST"))
