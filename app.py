@@ -37,6 +37,9 @@ def admin():
 def notfound(e):
     return render_template("404.html")
 
+# Add buttons here to the list
+buttons = ["text","youtube","article"]
+
 # Page for chat
 @app.route('/chat',methods=("GET","POST"))
 def chat():
@@ -49,13 +52,17 @@ def chat():
     if 'current_response' not in session:
         session["current_response"] = '' 
 
+    if "type" not in session:
+        session["type"] = 'text'
+
     # Processes chat request
     if request.method == "POST":
+        session["type"] = request.form["type"]
         if request.form["submit"] == "Submit":
             user_in = request.form["chatbox"]
-            type = request.form["type"]
+            session["type"] = request.form["type"]
             api_key = request.form["api_key"]
-            session["current_response"] = text_request(user_in,type,api_key)
+            session["current_response"] = text_request(user_in,session['type'],api_key)
         
         else:
             session["current_response"] = ""
@@ -63,6 +70,6 @@ def chat():
 
     # Display result to page
     if request.method == "GET":
-        return render_template("chat.html",result=session['current_response'],userResponse=session['username'])
+        return render_template("chat.html",result=session['current_response'],userResponse=session['username'],buttons=buttons,type=session['type'])
 
-    return render_template("chat.html", userResponse=session['username'])
+    return render_template("chat.html", userResponse=session['username'],buttons=buttons,type=session['type'])

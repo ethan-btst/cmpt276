@@ -227,6 +227,24 @@ select[name="type"] {
     font-family: 'Raleway', sans-serif;
 }
 
+button:enabled{
+    font-size: smaller;
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Raleway', sans-serif;
+}
+
+button:disabled{
+    font-size: smaller;
+    background-color: grey;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    font-family: 'Raleway', sans-serif;
+}
 
 h4 {
     margin-top: 20px;

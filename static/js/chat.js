@@ -2,9 +2,7 @@
 // Text that replaces usage notes in JSON form
 
 // Keep name the same as found in "value"
-// <select name="type" id="request_type">
-//                <option value="text">text</option> 
-//                <option value="youtube"...
+// of the type buttons
 const usage_notes ={
     "text" : "General chatgpt request, need to write<br>"+
              "example: 'Summarize the bible'",
@@ -16,13 +14,23 @@ const usage_notes ={
     "article" : "Only applicable to CNN articles as of now",
 }
 
-let request_type = document.getElementById("request_type")
-
 // Changes usage notes
-function change_notes(){
-    document.getElementById("usage notes").innerHTML = usage_notes[request_type.value]
-}
-request_type.addEventListener("change",change_notes)
+var request_type_list = document.getElementsByTagName("button")
 
-// Initial loading of usage notes 
-change_notes()
+for(var i = 0; i < request_type_list.length;i++){
+    request_type_list[i].addEventListener("click", () =>{
+
+        // Switch the all the buttons on
+        for(var i = 0; i < request_type_list.length;i++){
+            request_type_list[i].disabled = false;
+            request_type_list[i].name = '';
+        }
+        
+        // Turn the clicked button off and change usage notes
+        event.target.disabled = true
+        document.getElementById("type").value = event.target.innerHTML
+        document.getElementById("usage notes").innerHTML = usage_notes[event.target.innerHTML]
+    })
+}
+
+document.getElementById("usage notes").innerHTML = usage_notes[document.getElementById("type").value]
