@@ -1,20 +1,27 @@
 # CMPT 276 project
 
 ## Setup locally
+
 1. Clone repository to your system and enter it
+
 ```
 git clone https://github.com/ethan-btst/cmpt276.git
 cd cmpt276
 ```
 
-2. Set up the virtual environment using:
+2. Option a. Set up the virtual environment using:
+
 ```
 python -m venv venv
 .\venv\Scripts\activate
 pip install -r requirements.txt
 flask run
 ```
-2. Or when debugging (So you don't have to restart flask server after changes):
+
+2. Option b. Or when debugging (So you don't have to restart flask server after changes):
+
+- Also be sure to clear cookies (or test incognito) cause login cookies may be saved (Especially when trying to debug not logged in cases)
+
 ```
 python -m venv venv
 .\venv\Scripts\activate
@@ -22,10 +29,9 @@ pip install -r requirements.txt
 flask --app app.py --debug run
 ```
 
-
 3. Create the '.env' for the your api key
-   
-   In .env put:
-   > OPENAI_API_KEY = _your api key_
-   RAPIDAPI_KEY = _your_api_key_
 
+   In .env put:
+
+   > OPENAI*API_KEY = \_your api key*
+   > RAPIDAPI*KEY = \_your_api_key*
