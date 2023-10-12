@@ -34,8 +34,8 @@ def login():
 @app.route('/admin')
 def admin():
     if 'username' not in session: #debugging. prevents keyerror
-        print('user tries accessing dashboard without login') 
-        return redirect("login")
+        print('user tries admin accessing dashboard without login') 
+        return redirect(url_for('login'))
 
     if not session['username'] == 'admin':
         print('regular user trying to access admin dashboard')
@@ -53,8 +53,8 @@ def notfound(e):
 def chat():
 
     if 'username' not in session: #debugging. prevents keyerror
-        print('user tries accessing dashboard without login') 
-        return redirect("login")
+        print('user tries accessing regular dashboard without login') 
+        return redirect(url_for('login'))
 
     # Set a default empty response
     if 'current_response' not in session:
