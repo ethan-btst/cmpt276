@@ -33,10 +33,11 @@ def admin():
         print('user tries accessing dashboard without login') 
         return redirect("login")
 
-    if session['username'] == 'admin':
-        return render_template('admin.html')
+    if not session['username'] == 'admin':
+        print('regular user trying to access admin dashboard')
+        return redirect(url_for('index'))
 
-    return redirect(url_for('/'))
+    return render_template('admin.html')
 
 # 404 Not found page error
 @app.errorhandler(404)
@@ -55,6 +56,7 @@ def chat():
     if 'current_response' not in session:
         session["current_response"] = '' 
 
+    print('accessing dashboard for user named: ' + session['username'])
     # Processes chat request
     if request.method == "POST":
         if request.form["submit"] == "Submit":
