@@ -1,4 +1,4 @@
-# CMPT 276 project
+# CMPT 276 Media Summary App
 
 ## Setup locally
 
@@ -35,3 +35,7 @@ flask --app app.py --debug run
 
    > OPENAI*API_KEY = \_your api key*
    > RAPIDAPI*KEY = \_your_api_key*
+
+## Things to keep in mind - Testing (May be moved to another doc file later)
+
+- When adding routes, making sure to prevent keyerrors and unwanted access-redirects
