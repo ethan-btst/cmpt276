@@ -2,7 +2,12 @@ from flask import Flask
 from flask import *
 from chat_request import text_request
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'
+app.secret_key = 'your_secret_key' #needed for sessions
+
+# 404 Not found page error
+@app.errorhandler(404)
+def notfound(e):
+    return render_template("404.html")
 
 # Homepage, redirects to login page
 @app.route('/')
@@ -12,10 +17,15 @@ def index():
 # Login page
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    if 'username' in session: 
+        print('logged in user trying to login') 
+        return redirect(url_for('chat'))
+
     if request.method == 'POST':
         # Handle the login form submission
         username = request.form['username']
-        # Perform authentication and validation here
+        # todo Perform authentication and validation here
+
         # Redirect to a new page on successful login
         session['username'] = username
         if (username == 'admin'):
@@ -28,25 +38,27 @@ def login():
 # Admin page
 @app.route('/admin')
 def admin():
-    if session['username'] == 'admin':
-        return render_template('admin.html')
-    return redirect(url_for('/'))
+    if 'username' not in session: #debugging. prevents keyerror
+        print('user tries admin accessing dashboard without login') 
+        return redirect(url_for('login'))
 
-# 404 error page
-@app.errorhandler(404)
-def notfound(e):
-    return render_template("404.html")
+    if not session['username'] == 'admin':
+        print('regular user trying to access admin dashboard')
+        return redirect(url_for('index'))
+
+    return render_template('admin.html')
 
 # Add buttons here to the list
 buttons = ["text","youtube","article"]
+
 
 # Page for chat
 @app.route('/chat',methods=("GET","POST"))
 def chat():
 
-    # Redirect if not logged in
-    if 'username' not in session:
-        return redirect("login")
+    if 'username' not in session: #debugging. prevents keyerror
+        print('user tries accessing regular dashboard without login') 
+        return redirect(url_for('login'))
 
     # Set a default empty response
     if 'current_response' not in session:
@@ -55,6 +67,7 @@ def chat():
     if "type" not in session:
         session["type"] = 'text'
 
+    print('accessing dashboard for user named: ' + session['username'])
     # Processes chat request
     if request.method == "POST":
         session["type"] = request.form["type"]
