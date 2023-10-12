@@ -2,7 +2,7 @@ from flask import Flask
 from flask import *
 from chat_request import text_request
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'
+app.secret_key = 'your_secret_key' #needed for sessions
 
 # Homepage, redirects to login page
 @app.route('/')
@@ -15,7 +15,8 @@ def login():
     if request.method == 'POST':
         # Handle the login form submission
         username = request.form['username']
-        # Perform authentication and validation here
+        # todo Perform authentication and validation here
+
         # Redirect to a new page on successful login
         session['username'] = username
         if (username == 'admin'):
@@ -28,11 +29,16 @@ def login():
 # Admin page
 @app.route('/admin')
 def admin():
+    if 'username' not in session: #debugging. prevents keyerror
+        print('user tries accessing dashboard without login') 
+        return redirect("login")
+
     if session['username'] == 'admin':
         return render_template('admin.html')
+
     return redirect(url_for('/'))
 
-# 404 error page
+# 404 Not found page error
 @app.errorhandler(404)
 def notfound(e):
     return render_template("404.html")
@@ -41,8 +47,8 @@ def notfound(e):
 @app.route('/chat',methods=("GET","POST"))
 def chat():
 
-    # Redirect if not logged in
-    if 'username' not in session:
+    if 'username' not in session: #debugging. prevents keyerror
+        print('user tries accessing dashboard without login') 
         return redirect("login")
 
     # Set a default empty response
