@@ -12,6 +12,22 @@ def notfound(e):
 # Homepage, redirects to login page
 @app.route('/')
 def index():
+    return render_template('signup.html')
+
+# Signup page
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if request.method == 'POST':
+        # Handle the login form submission
+        username = request.form['username']
+        password = request.form['password']
+        # todo Perform validation here
+
+        # Redirect to a new page on successful login
+        session['username'] = username
+        return redirect(url_for('chat'))
+
+    # Render the login page for GET requests
     return render_template('login.html')
 
 # Login page
