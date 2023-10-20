@@ -12,7 +12,7 @@ def notfound(e):
 # Homepage, redirects to login page
 @app.route('/')
 def index():
-    return render_template('signup.html')
+    return render_template('login.html')
 
 # Signup page
 @app.route('/signup', methods=['GET', 'POST'])
@@ -22,13 +22,20 @@ def signup():
         username = request.form['username']
         password = request.form['password']
         # todo Perform validation here
+        error_message = ''
+        if len(username) < 1 or len(password) < 1:
+            error_message ='tries to sign up with empty field' 
+
+            #need to check if exists in db
+
+        if len(error_message) > 0:
+            return render_template('login.html', error_message=error_message)
 
         # Redirect to a new page on successful login
         session['username'] = username
         return redirect(url_for('chat'))
 
-    # Render the login page for GET requests
-    return render_template('login.html')
+    return render_template('signup.html')
 
 # Login page
 @app.route('/login', methods=['GET', 'POST'])
@@ -41,7 +48,13 @@ def login():
         # Handle the login form submission
         username = request.form['username']
         # todo Perform authentication and validation here
+        error_message = ''
+        if len(username) < 1:
+            error_message ='tries to login with no usernmae' 
+            #need to check if exists in db
 
+        if len(error_message) > 0:
+            return render_template('login.html', error_message=error_message)
         # Redirect to a new page on successful login
         session['username'] = username
         if (username == 'admin'):
