@@ -52,7 +52,7 @@ def signup():
         username = request.form['username']
         password = request.form['password']
         error_message = ''
-        if len(username) < 1 or len(password) < 1:
+        if len(username) < 1 or len(password) < 1: # Still tested in case of post sneaky post requests (outside of the html form)
             error_message ='tries to sign up with empty field' 
         users = get_users_all()
         for u in users:
@@ -87,7 +87,7 @@ def login():
         # for u in users:
             # print(u[0])
         error_message = ''
-        if len(username) < 1: # Still tested in case of post sneaky post requests (outside of the html form)
+        if len(username) < 1 or len(password) < 1: # Still tested in case of post sneaky post requests (outside of the html form)
             error_message ='tries to login with no usernmae' 
 
         users = get_users_all()
