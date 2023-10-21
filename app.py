@@ -30,8 +30,8 @@ def get_users_all():
     with connection:
         with connection.cursor() as cursor:
             cursor.execute(USERS)
-            user = cursor.fetchall()
-    return user
+            users = cursor.fetchall()
+    return users
 
 
 # 404 Not found page error
@@ -85,7 +85,6 @@ def login():
         username = request.form['username']
         password = request.form['password']
 
-        # todo Perform authentication and validation here
         users = get_users_all()
         # for u in users:
             # print(u[0])
@@ -134,7 +133,6 @@ def admin():
 
 # Add buttons here to the list
 buttons = ["text","youtube","article"]
-
 
 # Page for chat
 @app.route('/chat',methods=("GET","POST"))
