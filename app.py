@@ -1,8 +1,38 @@
+import os
+import psycopg2
 from flask import Flask
 from flask import *
 from chat_request import text_request
+
 app = Flask(__name__)
 app.secret_key = 'your_secret_key' #needed for sessions
+url = os.environ.get("DATABASE_URL")  # gets db variable 
+connection = psycopg2.connect(url)
+
+CREATE_USERS_TABLE = (
+    "CREATE TABLE IF NOT EXISTS users (id SERIAL PRIMARY KEY, name TEXT, password TEXT);"
+)
+INSERT_USER = "INSERT INTO users (name, password) VALUES (%s, %s);"
+USERS = (
+    """SELECT * FROM users;"""
+)
+
+@app.post("/api/users")
+def create_users(username, password):
+    with connection:
+        with connection.cursor() as cursor:
+            cursor.execute(CREATE_USERS_TABLE)
+            cursor.execute(INSERT_USER, (username,password))
+    return {"message": f"USER {username} created."}, 201
+
+@app.get("/api/users")
+def get_users_all():
+    with connection:
+        with connection.cursor() as cursor:
+            cursor.execute(USERS)
+            user = cursor.fetchall()
+    return user
+
 
 # 404 Not found page error
 @app.errorhandler(404)
@@ -25,12 +55,18 @@ def signup():
         error_message = ''
         if len(username) < 1 or len(password) < 1:
             error_message ='tries to sign up with empty field' 
-
             #need to check if exists in db
+        users = get_users_all()
+        for u in users:
+            # print(u, u[1])
+            if (username == u[1]):
+                error_message = 'username has been used'
 
         if len(error_message) > 0:
-            return render_template('login.html', error_message=error_message)
+            print('caught error')
+            return render_template('signup.html', error_message=error_message)
 
+        create_users(username, password)
         # Redirect to a new page on successful login
         session['username'] = username
         return redirect(url_for('chat'))
@@ -47,14 +83,31 @@ def login():
     if request.method == 'POST':
         # Handle the login form submission
         username = request.form['username']
+        password = request.form['password']
         # todo Perform authentication and validation here
-        error_message = ''
-        if len(username) < 1:
-            error_message ='tries to login with no usernmae' 
-            #need to check if exists in db
 
-        if len(error_message) > 0:
+        users = get_users_all()
+        for u in users:
+            print(u[0])
+        error_message = ''
+        if len(username) < 1: #still tested in case of post req (not in the form)
+            error_message ='tries to login with no usernmae' 
+
+        users = get_users_all()
+        isUser = False
+        passwordKey = ''
+        for u in users:
+            if (username == u[1]):
+                isUser = True
+                passwordKey = u[2]
+        if (not isUser):
+            error_message='user does not exist'
+        elif (password != passwordKey):
+            error_message='incorrect password'
+
+        if (len(error_message) > 0):
             return render_template('login.html', error_message=error_message)
+
         # Redirect to a new page on successful login
         session['username'] = username
         if (username == 'admin'):

@@ -35,6 +35,7 @@ flask --app app.py --debug run
 
    > OPENAI*API_KEY = \_your api key*
    > RAPIDAPI*KEY = \_your_api_key*
+   > DATABASE*URL = \_your_postgres-elephant_url*
 
 ## Things to keep in mind - Testing (May be moved to another doc file later)
 
