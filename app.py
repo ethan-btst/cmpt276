@@ -58,7 +58,7 @@ def signup():
             #need to check if exists in db
         users = get_users_all()
         for u in users:
-            # print(u, u[1])
+            # print(u[1])
             if (username == u[1]):
                 error_message = 'username has been used'
 
@@ -84,13 +84,13 @@ def login():
         # Handle the login form submission
         username = request.form['username']
         password = request.form['password']
-        # todo Perform authentication and validation here
 
+        # todo Perform authentication and validation here
         users = get_users_all()
-        for u in users:
-            print(u[0])
+        # for u in users:
+            # print(u[0])
         error_message = ''
-        if len(username) < 1: #still tested in case of post req (not in the form)
+        if len(username) < 1: # Still tested in case of post sneaky post requests (outside of the html form)
             error_message ='tries to login with no usernmae' 
 
         users = get_users_all()
@@ -110,8 +110,10 @@ def login():
 
         # Redirect to a new page on successful login
         session['username'] = username
-        if (username == 'admin'):
+
+        if (username == 'admin'): # Admin Edgecase
             return redirect(url_for('admin'))
+
         return redirect(url_for('chat'))
 
     # Render the login page for GET requests
