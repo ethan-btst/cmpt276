@@ -51,11 +51,9 @@ def signup():
         # Handle the login form submission
         username = request.form['username']
         password = request.form['password']
-        # todo Perform validation here
         error_message = ''
         if len(username) < 1 or len(password) < 1:
             error_message ='tries to sign up with empty field' 
-            #need to check if exists in db
         users = get_users_all()
         for u in users:
             # print(u[1])
