@@ -28,7 +28,7 @@ def is_api_key_valid():
 
 
 # Takes a request and gets chat gpt to respond
-def text_request(user_in, type, api_key):
+def text_request(user_in, type, api_key,file):
 
     # Checks for environment variables
     # If you have .env and an API key you don't need to manually insert
@@ -49,6 +49,7 @@ def text_request(user_in, type, api_key):
         transcript = YouTubeTranscriptApi.get_transcript(user_in)
         formatter = TextFormatter()
         prompt = "Summarize this video transcript in 200 words" + formatter.format_transcript(transcript)[0:3500]
+   
     elif(type == 'article'):
         apiurl = "https://news-article-extraction.p.rapidapi.com/"
         # payload = { "url": "https://edition.cnn.com/2020/06/30/tech/facebook-ad-business-boycott/index.html" }
@@ -64,7 +65,16 @@ def text_request(user_in, type, api_key):
         articleContent = data['content']
         prompt = 'summarize this article '+ articleContent
 
+    # TODO add pdf/image stuff
+    if file != '':
+        print('If file was uploaded, delete it')
+        print(file)
+        os.remove('upload folder/'+file)
+        return "file uploaded: " + file
 
+    # Test case without chatgpt request
+    elif(type == 'test submit'):
+        return "test submit"
 
     response = openai.Completion.create(
         model="text-davinci-003",

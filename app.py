@@ -1,4 +1,5 @@
 import os
+from dotenv import load_dotenv
 import psycopg2
 from flask import Flask
 from flask import *
@@ -6,6 +7,12 @@ from chat_request import text_request
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key' #needed for sessions
+
+
+UPLOAD_FOLDER = 'upload folder/'
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg'}
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 url = os.environ.get("DATABASE_URL")  # gets db variable 
 connection = psycopg2.connect(url)
 
@@ -32,7 +39,6 @@ def get_users_all():
             cursor.execute(USERS)
             users = cursor.fetchall()
     return users
-
 
 # 404 Not found page error
 @app.errorhandler(404)
@@ -84,8 +90,7 @@ def login():
         password = request.form['password']
 
         users = get_users_all()
-        # for u in users:
-            # print(u[0])
+        print(users)
         error_message = ''
         if len(username) < 1 or len(password) < 1: # Still tested in case of post sneaky post requests (outside of the html form)
             error_message ='tries to login with no usernmae' 
@@ -93,10 +98,14 @@ def login():
         users = get_users_all()
         isUser = False
         passwordKey = ''
+
         for u in users:
+
             if (username == u[1]):
                 isUser = True
                 passwordKey = u[2]
+
+
         if (not isUser):
             error_message='user does not exist'
         elif (password != passwordKey):
@@ -130,7 +139,7 @@ def admin():
     return render_template('admin.html')
 
 # Add buttons here to the list
-buttons = ["text","youtube","article"]
+buttons = ["text","youtube","article","test submit"]
 
 # Page for chat
 @app.route('/chat',methods=("GET","POST"))
@@ -152,11 +161,23 @@ def chat():
     if request.method == "POST":
         session["type"] = request.form["type"]
         if request.form["submit"] == "Submit":
+
+            # Upload file
+            file = request.files["file"]
+            if file.filename != '':
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'],file.filename))
+
+            
             user_in = request.form["chatbox"]
             session["type"] = request.form["type"]
             api_key = request.form["api_key"]
-            session["current_response"] = text_request(user_in,session['type'],api_key)
-        
+            session["current_response"] = text_request(
+                user_in,
+                session['type'],
+                api_key,
+                file.filename
+            )
+
         else:
             session["current_response"] = ""
         return redirect(request.path)
