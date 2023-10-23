@@ -43,15 +43,13 @@ def update_info(data,data_type):
             cursor.execute(GET_USER_ID % (session['username']))
             user_id = cursor.fetchone()[0]
 
+            # Special username case to check for unique user names
             if data_type == 'name':
                 cursor.execute("SELECT name FROM users")
                 allUsers = cursor.fetchone()
 
                 for i in allUsers:
-                    print(i[0] +' to '+session['username'])
                     if data == i[0]:
-                        
-                        print('take')
                         return 'Username taken'
                     
                 if data == '':
@@ -62,6 +60,7 @@ def update_info(data,data_type):
                     session['username'] = data
                     return 'Username changed'
 
+            # General case
             else:
                 if data == '':
                     return 'Insert a ' + data_type
@@ -69,7 +68,7 @@ def update_info(data,data_type):
                 else:
                     cursor.execute(CHANGE_USER_DATA % (data_type,data,user_id))
                     return data_type + ' changed'
-    return
+    
 
 
 
@@ -182,17 +181,16 @@ def admin():
 # Settings page
 @app.route("/settings",methods=('GET','POST'))
 def settings():
-    # names = get_users_all()
-
     if request.method == 'POST':
-        
+
+        # Move back to chat
         if "chat" in request.form:
             return redirect(url_for('chat'))   
 
+        # Change data
         else:
             change_data = request.form['change']
             change_type = request.form['type']
-
             status = update_info(change_data,change_type)
             return render_template('settings.html',status = status)
         
