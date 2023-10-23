@@ -67,10 +67,7 @@ def text_request(user_in, type, api_key,file):
 
     # TODO add pdf/image stuff
     if file != '':
-        print('If file was uploaded, delete it')
-        print(file)
-        os.remove('upload folder/'+file)
-        return "file uploaded: " + file
+        return "file uploaded (Do smomething): " + file.filename
 
     # Test case without chatgpt request
     elif(type == 'test submit'):

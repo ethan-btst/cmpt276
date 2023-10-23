@@ -224,9 +224,6 @@ def chat():
 
             # Upload file
             file = request.files["file"]
-            if file.filename != '':
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'],file.filename))
-
             
             user_in = request.form["chatbox"]
             session["type"] = request.form["type"]
@@ -235,7 +232,7 @@ def chat():
                 user_in,
                 session['type'],
                 api_key,
-                file.filename
+                file
             )
 
         else:
