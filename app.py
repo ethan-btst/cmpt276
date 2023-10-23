@@ -23,7 +23,8 @@ INSERT_USER = "INSERT INTO users (name, password) VALUES (%s, %s);"
 USERS = (
     """SELECT * FROM users;"""
 )
-
+GET_USER_ID = "SELECT id FROM users WHERE name = '%s';"
+CHANGE_USER_DATA = "UPDATE users SET %s = '%s' where id = %s;"
 @app.post("/api/users")
 def create_users(username, password):
     with connection:
@@ -31,6 +32,46 @@ def create_users(username, password):
             cursor.execute(CREATE_USERS_TABLE)
             cursor.execute(INSERT_USER, (username,password))
     return {"message": f"USER {username} created."}, 201
+
+@app.post("/app/users")
+def update_info(data,data_type):
+    current_user = session['username']
+    print(current_user)
+    with connection:
+        with connection.cursor() as cursor:
+
+            cursor.execute(GET_USER_ID % (session['username']))
+            user_id = cursor.fetchone()[0]
+
+            if data_type == 'name':
+                cursor.execute("SELECT name FROM users")
+                allUsers = cursor.fetchone()
+
+                for i in allUsers:
+                    print(i[0] +' to '+session['username'])
+                    if data == i[0]:
+                        
+                        print('take')
+                        return 'Username taken'
+                    
+                if data == '':
+                    return 'Insert a username'
+
+                else:
+                    cursor.execute(CHANGE_USER_DATA % (data_type,data,user_id))
+                    session['username'] = data
+                    return 'Username changed'
+
+            else:
+                if data == '':
+                    return 'Insert a ' + data_type
+
+                else:
+                    cursor.execute(CHANGE_USER_DATA % (data_type,data,user_id))
+                    return data_type + ' changed'
+    return
+
+
 
 @app.get("/api/users")
 def get_users_all():
@@ -137,6 +178,27 @@ def admin():
         return redirect(url_for('index'))
 
     return render_template('admin.html')
+
+# Settings page
+@app.route("/settings",methods=('GET','POST'))
+def settings():
+    # names = get_users_all()
+
+    if request.method == 'POST':
+        
+        if "chat" in request.form:
+            return redirect(url_for('chat'))   
+
+        else:
+            change_data = request.form['change']
+            change_type = request.form['type']
+
+            status = update_info(change_data,change_type)
+            return render_template('settings.html',status = status)
+        
+
+    return render_template('settings.html')
+
 
 # Add buttons here to the list
 buttons = ["text","youtube","article","test submit"]
