@@ -14,7 +14,6 @@ ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 url = os.environ.get("DATABASE_URL")  # gets db variable 
-connection = psycopg2.connect(url)
 
 CREATE_USERS_TABLE = (
     "CREATE TABLE IF NOT EXISTS users (id SERIAL PRIMARY KEY, name TEXT, password TEXT);"
@@ -27,57 +26,64 @@ GET_USER_ID = "SELECT id FROM users WHERE name = '%s';"
 CHANGE_USER_DATA = "UPDATE users SET %s = '%s' where id = %s;"
 @app.post("/api/users")
 def create_users(username, password):
+    connection = psycopg2.connect(url)
     with connection:
         with connection.cursor() as cursor:
             cursor.execute(CREATE_USERS_TABLE)
             cursor.execute(INSERT_USER, (username,password))
+    
+    connection.close()
     return {"message": f"USER {username} created."}, 201
 
 @app.post("/app/users")
 def update_info(data,data_type):
-    current_user = session['username']
-    print(current_user)
+    connection = psycopg2.connect(url)
     with connection:
         with connection.cursor() as cursor:
-
             cursor.execute(GET_USER_ID % (session['username']))
             user_id = cursor.fetchone()[0]
 
             # Special username case to check for unique user names
             if data_type == 'name':
+                status = ''
                 cursor.execute("SELECT name FROM users")
                 allUsers = cursor.fetchone()
 
                 for i in allUsers:
                     if data == i[0]:
-                        return 'Username taken'
+                        status = 'Username taken'
                     
-                if data == '':
-                    return 'Insert a username'
-
-                else:
+                if data != '' and status == '':
                     cursor.execute(CHANGE_USER_DATA % (data_type,data,user_id))
                     session['username'] = data
-                    return 'Username changed'
+                    status = 'Username changed'
+
+                else:
+                    status = 'Please insert something'
 
             # General case
             else:
                 if data == '':
-                    return 'Insert a ' + data_type
+                    status = 'Insert a ' + data_type
 
                 else:
                     cursor.execute(CHANGE_USER_DATA % (data_type,data,user_id))
-                    return data_type + ' changed'
-    
+                    status = data_type + ' changed'
+
+    connection.close()
+    return status
 
 
 
 @app.get("/api/users")
 def get_users_all():
+    connection = psycopg2.connect(url)
     with connection:
         with connection.cursor() as cursor:
             cursor.execute(USERS)
             users = cursor.fetchall()
+    
+    connection.close()
     return users
 
 # 404 Not found page error
@@ -234,6 +240,7 @@ def chat():
                 api_key,
                 file
             )
+            
 
         else:
             session["current_response"] = ""
