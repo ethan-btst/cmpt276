@@ -65,9 +65,19 @@ def text_request(user_in, type, api_key,file):
         articleContent = data['content']
         prompt = 'summarize this article '+ articleContent
 
-    # TODO add pdf/image stuff
+    # TODO add pdf/image/txt stuff
     if file != '':
-        return "file uploaded (Do smomething): " + file.filename
+        filetype = file.filename.rsplit('.',1)[1]
+
+        if filetype == 'png':
+            return 'png file'
+
+        elif filetype == 'txt':
+            return file.read()
+
+        elif filetype == 'pdf':
+            return 'pdf file'
+
 
     # Test case without chatgpt request
     elif(type == 'test submit'):
