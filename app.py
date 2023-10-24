@@ -12,6 +12,7 @@ app.secret_key = 'your_secret_key' #needed for sessions
 UPLOAD_FOLDER = 'upload folder/'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 20 * 1000 * 1000
 
 url = os.environ.get("DATABASE_URL")  # gets db variable 
 
@@ -22,8 +23,7 @@ INSERT_USER = "INSERT INTO users (name, password) VALUES (%s, %s);"
 USERS = (
     """SELECT * FROM users;"""
 )
-GET_USER_ID = "SELECT id FROM users WHERE name = '%s';"
-CHANGE_USER_DATA = "UPDATE users SET %s = '%s' where id = %s;"
+
 @app.post("/api/users")
 def create_users(username, password):
     connection = psycopg2.connect(url)
@@ -35,44 +35,56 @@ def create_users(username, password):
     connection.close()
     return {"message": f"USER {username} created."}, 201
 
+# Use to update something in the database
+# Uses user id in case name needs to be changed
 @app.post("/app/users")
-def update_info(data,data_type):
+def update_user_info(data,data_type,user_id):
     connection = psycopg2.connect(url)
     with connection:
         with connection.cursor() as cursor:
-            cursor.execute(GET_USER_ID % (session['username']))
-            user_id = cursor.fetchone()[0]
 
             # Special username case to check for unique user names
             if data_type == 'name':
                 status = ''
                 cursor.execute("SELECT name FROM users")
-                allUsers = cursor.fetchone()
+                allUsers = cursor.fetchall()
 
                 for i in allUsers:
                     if data == i[0]:
                         status = 'Username taken'
                     
                 if data != '' and status == '':
-                    cursor.execute(CHANGE_USER_DATA % (data_type,data,user_id))
+                    cursor.execute("UPDATE users SET %s = '%s' where id = %s;" % (data_type,data,user_id))
                     session['username'] = data
                     status = 'Username changed'
 
-                else:
+                elif data == '':
                     status = 'Please insert something'
 
-            # General case
+            # General case for password, api keys ...
             else:
                 if data == '':
                     status = 'Insert a ' + data_type
 
                 else:
-                    cursor.execute(CHANGE_USER_DATA % (data_type,data,user_id))
+                    cursor.execute("UPDATE users SET %s = '%s' where id = %s;" % (data_type,data,user_id))
                     status = data_type + ' changed'
 
     connection.close()
     return status
 
+# Gets something about a user from the database
+# Could use name, or id to specify which user to get
+@app.get("/api/users")
+def get_user_info(data,identifier,identity):
+    connection = psycopg2.connect(url)
+    with connection:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT %s FROM users WHERE %s = '%s';" % (data,identifier,identity))
+            info = cursor.fetchone()[0]
+    
+    connection.close()
+    return info
 
 
 @app.get("/api/users")
@@ -160,9 +172,12 @@ def login():
         if (len(error_message) > 0):
             return render_template('login.html', error_message=error_message)
 
-        # Redirect to a new page on successful login
+        # Add relevent user data to session
         session['username'] = username
+        session['openai_key'] = get_user_info('openai_key','name',username)
+        session['user_id'] = get_user_info('id','name',username)
 
+        # Redirect to a new page on successful login
         if (username == 'admin'): # Admin Edgecase
             return redirect(url_for('admin'))
 
@@ -187,6 +202,9 @@ def admin():
 # Settings page
 @app.route("/settings",methods=('GET','POST'))
 def settings():
+    if 'username' not in session:
+        return redirect(url_for('login'))
+
     if request.method == 'POST':
 
         # Move back to chat
@@ -197,7 +215,7 @@ def settings():
         else:
             change_data = request.form['change']
             change_type = request.form['type']
-            status = update_info(change_data,change_type)
+            status = update_user_info(change_data,change_type,session['user_id'])
             return render_template('settings.html',status = status)
         
 
