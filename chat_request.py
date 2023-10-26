@@ -1,5 +1,6 @@
 import openai
 import os
+import io
 from dotenv import load_dotenv
 
 import json
@@ -12,6 +13,8 @@ load_dotenv()
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 rapidapi_key = os.getenv("RAPIDAPI_KEY")
+
+AUDIO_FORMATS = ['flac', 'm4a', 'mp3', 'mp4', 'mpeg', 'mpga', 'oga', 'ogg', 'wav', 'webm']
 
 # Test function to check if api key is valid
 def is_api_key_valid():
@@ -68,9 +71,20 @@ def text_request(user_in, type, api_key,file):
     # TODO add pdf/image/txt stuff
     if file != '':
         filetype = file.filename.rsplit('.',1)[1]
-
+        a_file = io.BytesIO(file.read())
+        a_file.name = file.filename
         if filetype == 'png':
             return 'png file'
+
+            
+        elif filetype in AUDIO_FORMATS:
+            try:
+                transcript = (openai.Audio.transcribe(model='whisper-1',file=a_file,response_format="text"))
+
+            except:
+                return "invalid audio file"
+
+            return transcript
 
         elif filetype == 'txt':
             return file.read()

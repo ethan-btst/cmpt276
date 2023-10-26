@@ -12,7 +12,7 @@ app.secret_key = 'your_secret_key' #needed for sessions
 UPLOAD_FOLDER = 'upload folder/'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['MAX_CONTENT_LENGTH'] = 20 * 1000 * 1000
+app.config['MAX_CONTENT_LENGTH'] = 25 * 1000 * 1000
 
 url = os.environ.get("DATABASE_URL")  # gets db variable 
 
@@ -258,7 +258,6 @@ def chat():
                 api_key,
                 file
             )
-            
 
         else:
             session["current_response"] = ""
@@ -266,6 +265,11 @@ def chat():
 
     # Display result to page
     if request.method == "GET":
-        return render_template("chat.html",result=session['current_response'],userResponse=session['username'],buttons=buttons,type=session['type'])
+        return render_template("chat.html",
+        result=session['current_response'],
+        userResponse=session['username'],
+        buttons=buttons,
+        type=session['type']
+        )
 
     return render_template("chat.html", userResponse=session['username'],buttons=buttons,type=session['type'])
