@@ -5,14 +5,17 @@ from flask import Flask
 from flask import *
 from chat_request import text_request
 
+from flask_session import Session
+
 app = Flask(__name__)
 app.secret_key = 'your_secret_key' #needed for sessions
-
 
 UPLOAD_FOLDER = 'upload folder/'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 25 * 1000 * 1000
+app.config["SESSION_PERMANENT"] = False
+app.config['SESSION_TYPE'] = 'filesystem'
 
 url = os.environ.get("DATABASE_URL")  # gets db variable 
 
@@ -23,6 +26,8 @@ INSERT_USER = "INSERT INTO users (name, password) VALUES (%s, %s);"
 USERS = (
     """SELECT * FROM users;"""
 )
+
+Session(app)
 
 @app.post("/api/users")
 def create_users(username, password):
@@ -131,6 +136,7 @@ def signup():
         create_users(username, password)
         # Redirect to a new page on successful login
         session['username'] = username
+        session['type'] = 'text'
         return redirect(url_for('chat'))
 
     return render_template('signup.html')
@@ -223,7 +229,8 @@ def settings():
 
 
 # Add buttons here to the list
-buttons = ["text","youtube","article","test submit"]
+buttons = ["text","youtube","article","audio file","pdf/text file"]
+file_buttons = ["audio file","pdf/text file"]
 
 # Page for chat
 @app.route('/chat',methods=("GET","POST"))
@@ -249,14 +256,23 @@ def chat():
             # Upload file
             file = request.files["file"]
             
-            user_in = request.form["chatbox"]
+            if 'test submit' in request.form:
+                test_toggle = True
+            else:
+                test_toggle = False
+
+            instructions = request.form["chatbox"]
+            user_in = request.form["user input"]
             session["type"] = request.form["type"]
             api_key = request.form["api_key"]
+            
             session["current_response"] = text_request(
                 user_in,
+                instructions,
                 session['type'],
                 api_key,
-                file
+                file,
+                test_toggle
             )
 
         else:
@@ -269,7 +285,8 @@ def chat():
         result=session['current_response'],
         userResponse=session['username'],
         buttons=buttons,
-        type=session['type']
+        file_buttons = file_buttons,
+        type=session['type'],
         )
 
     return render_template("chat.html", userResponse=session['username'],buttons=buttons,type=session['type'])

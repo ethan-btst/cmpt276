@@ -83,16 +83,29 @@
         <!-- Button generation to select type -->
         <div>
             {% for button in buttons %}
-            <button type="button" {% if type == button  %}disabled{% endif %}>{{ button }}</button>
+            <button type="button" {% if type == button %}disabled{% endif %}>{{ button }}</button>
             {% endfor %}
             <input hidden type="text" id="type" name="type" value={{ type }}>
         </div>
         
-        <textarea rows="4" cols="50" name="chatbox" placeholder="Input chatgpt request"></textarea>
-            <input type="submit" name="submit" value="Submit" >
-            <input type="submit" id="Clear" name="submit" value="Clear response">
-        
-        <input type="file" name="file" accept=".txt, .pdf, .png, .jpg, .jpeg">
+          <textarea rows="4" cols="50" name="chatbox" placeholder="Instructions for ChatGPT"></textarea>
+          <label for="user input" id="input label">Text</label>
+
+          {% if type in file_buttons %}
+          <input hidden type="text" id="user input" name="user input" placeholder="What should be summarized">
+          <input type="file" name="file" id="file" accept=".txt, .pdf, .png, .jpg, .jpeg, .mp3">
+          {% else %}
+          <input type="text" id="user input" name="user input" placeholder="What should be summarized">
+          <input hidden type="file" name="file" id="file" accept=".txt, .pdf, .png, .jpg, .jpeg, .mp3">
+          {% endif %}
+
+          
+          <br>
+          <input type="checkbox" name="test submit"> Return prompt
+          <br><br><br>
+          
+          <input type="submit" name="submit" value="Submit" >
+          <input type="submit" id="Clear" name="submit" value="Clear response">
     </form>
 
     <h4>Notes</h4>

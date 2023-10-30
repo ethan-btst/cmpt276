@@ -8,6 +8,7 @@ import requests
 
 from youtube_transcript_api import YouTubeTranscriptApi
 from youtube_transcript_api.formatters import TextFormatter
+from PyPDF2 import PdfReader
 
 load_dotenv()
 
@@ -31,8 +32,7 @@ def is_api_key_valid():
 
 
 # Takes a request and gets chat gpt to respond
-def text_request(user_in, type, api_key,file):
-
+def text_request(user_in,instructions,type,api_key,file,test_toggle):
     # Checks for environment variables
     # If you have .env and an API key you don't need to manually insert
     # Otherwise, get from the website
@@ -42,16 +42,20 @@ def text_request(user_in, type, api_key,file):
     # Check the key
     if(not is_api_key_valid()):
        return "Not a valid key"
-    
 
+    if(instructions == ''):
+        instructions = "Summarize this video transcript in 200 words "
 
     if(type == "text"):
         prompt = user_in
 
     elif(type == "youtube"):
-        transcript = YouTubeTranscriptApi.get_transcript(user_in)
-        formatter = TextFormatter()
-        prompt = "Summarize this video transcript in 200 words" + formatter.format_transcript(transcript)[0:3500]
+        try:
+            transcript = YouTubeTranscriptApi.get_transcript(user_in)
+            formatter = TextFormatter()
+            prompt = formatter.format_transcript(transcript)[0:3500]
+        except:
+            return "Invalid youtube id"
    
     elif(type == 'article'):
         apiurl = "https://news-article-extraction.p.rapidapi.com/"
@@ -68,38 +72,47 @@ def text_request(user_in, type, api_key,file):
         articleContent = data['content']
         prompt = 'summarize this article '+ articleContent
 
-    # TODO add pdf/image/txt stuff
-    if file != '':
+    elif(type == "audio file"):
+        if file.filename == '':
+            return "No file"
+
         filetype = file.filename.rsplit('.',1)[1]
+        if filetype not in AUDIO_FORMATS:
+            return "Invalid file type, must be " + str(AUDIO_FORMATS)
+
         a_file = io.BytesIO(file.read())
         a_file.name = file.filename
-        if filetype == 'png':
-            return 'png file'
 
-            
-        elif filetype in AUDIO_FORMATS:
-            try:
-                transcript = (openai.Audio.transcribe(model='whisper-1',file=a_file,response_format="text"))
+        prompt = openai.Audio.transcribe(model='whisper-1',file=a_file,response_format="text")[0:4500]
 
-            except:
-                return "invalid audio file"
+    elif("pdf/text file"):
+        if file.filename == '':
+            return "No file"
 
-            return transcript
+        filetype = file.filename.rsplit('.',1)[1]
+        if filetype not in ["pdf","txt"]:
+            return "Invalid file type, must be pdf or txt file"
+        a_file = io.BytesIO(file.read())
+        a_file.name = file.filename
 
-        elif filetype == 'txt':
-            return file.read()
+        if filetype == 'txt':
+            prompt = str(a_file.read())
 
-        elif filetype == 'pdf':
-            return 'pdf file'
+        else:
+            reader = PdfReader(a_file)
+            prompt = ''
+            for i in reader.pages:
+                prompt += i.extract_text()
+
 
 
     # Test case without chatgpt request
-    elif(type == 'test submit'):
-        return "test submit"
-
+    if test_toggle:
+        return instructions + prompt
+    
     response = openai.Completion.create(
         model="text-davinci-003",
-        prompt = prompt,
+        prompt = instructions + prompt,
         temperature=0.6,
         max_tokens=200,
     )
