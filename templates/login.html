@@ -2,8 +2,10 @@
 <html>
   <head>
     <title>Login</title>
+    <link rel="stylesheet" href="../static/css/login.css">
   </head>
   <body>
+    <div class="wrapper">
     <h1>Login {{error_message}}</h1>
 
     <form method="post" action="/login">
@@ -19,6 +21,8 @@
     <form method="GET" action="/signup">
       <input id="search-btn" type="submit" value="Signup Instead" />
     </form>
+
+    </div>
     <script src="../static/js/loginscript.js"></script>
 
     <!-- Optionally, you can include a link to the registration page -->

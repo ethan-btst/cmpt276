@@ -1,0 +1,55 @@
+body{
+    background-color: orange ;
+    min-height: 100vh;  
+    padding: 0%;
+    margin: 0%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+form{
+    display: grid;
+    font-size: 1.25rem;
+}
+
+#loginButton{
+    width: 50%;
+    margin: 10px auto;
+    align-self: center;
+    background-color: white;
+    color: black;
+    transition: 0.25s ease;
+}
+
+#loginButton:hover{
+    background-color: black;
+    color: white;
+}
+
+#search-btn{
+    width: 50%;
+    margin: 10px auto;
+    align-self: center;
+    background-color: white;
+    color: black;
+    transition: 0.25s ease;
+}
+
+#search-btn:hover{
+    background-color: black;
+    color: white;
+}
+
+#search-btn{
+    width: 50%;
+    margin: 10px auto;
+    align-self: center;
+}
+
+.wrapper{
+    border: 1px solid black;
+    background-color: grey;
+    padding: 7rem 7rem;
+}
