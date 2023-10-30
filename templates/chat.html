@@ -76,7 +76,7 @@
     {% endif %}
 
     <!-- Way to interact with chat gpt -->
-    <form action="/chat" method="post">
+    <form action="/chat" method="post" enctype=multipart/form-data>
         Hello {{userResponse}}, enter your API key
         <input type="text" name="api_key" /><br />
 
@@ -91,11 +91,13 @@
         <textarea rows="4" cols="50" name="chatbox" placeholder="Input chatgpt request"></textarea>
             <input type="submit" name="submit" value="Submit" >
             <input type="submit" id="Clear" name="submit" value="Clear response">
+        
+        <input type="file" name="file" accept=".txt, .pdf, .png, .jpg, .jpeg">
     </form>
 
     <h4>Notes</h4>
     <p id="usage notes"></p>
-
+    <a href="{{ url_for('settings') }}">Settings</a>
     <script src="../static/js/chat.js"></script>
     <script src="js/script.js"></script>
   </body>

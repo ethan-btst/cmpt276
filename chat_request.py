@@ -1,5 +1,6 @@
 import openai
 import os
+import io
 from dotenv import load_dotenv
 
 import json
@@ -12,6 +13,8 @@ load_dotenv()
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 rapidapi_key = os.getenv("RAPIDAPI_KEY")
+
+AUDIO_FORMATS = ['flac', 'm4a', 'mp3', 'mp4', 'mpeg', 'mpga', 'oga', 'ogg', 'wav', 'webm']
 
 # Test function to check if api key is valid
 def is_api_key_valid():
@@ -28,7 +31,7 @@ def is_api_key_valid():
 
 
 # Takes a request and gets chat gpt to respond
-def text_request(user_in, type, api_key):
+def text_request(user_in, type, api_key,file):
 
     # Checks for environment variables
     # If you have .env and an API key you don't need to manually insert
@@ -49,6 +52,7 @@ def text_request(user_in, type, api_key):
         transcript = YouTubeTranscriptApi.get_transcript(user_in)
         formatter = TextFormatter()
         prompt = "Summarize this video transcript in 200 words" + formatter.format_transcript(transcript)[0:3500]
+   
     elif(type == 'article'):
         apiurl = "https://news-article-extraction.p.rapidapi.com/"
         # payload = { "url": "https://edition.cnn.com/2020/06/30/tech/facebook-ad-business-boycott/index.html" }
@@ -64,7 +68,34 @@ def text_request(user_in, type, api_key):
         articleContent = data['content']
         prompt = 'summarize this article '+ articleContent
 
+    # TODO add pdf/image/txt stuff
+    if file != '':
+        filetype = file.filename.rsplit('.',1)[1]
+        a_file = io.BytesIO(file.read())
+        a_file.name = file.filename
+        if filetype == 'png':
+            return 'png file'
 
+            
+        elif filetype in AUDIO_FORMATS:
+            try:
+                transcript = (openai.Audio.transcribe(model='whisper-1',file=a_file,response_format="text"))
+
+            except:
+                return "invalid audio file"
+
+            return transcript
+
+        elif filetype == 'txt':
+            return file.read()
+
+        elif filetype == 'pdf':
+            return 'pdf file'
+
+
+    # Test case without chatgpt request
+    elif(type == 'test submit'):
+        return "test submit"
 
     response = openai.Completion.create(
         model="text-davinci-003",

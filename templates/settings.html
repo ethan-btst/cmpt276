@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+</head>
+<body>
+    <h1>Change user stuff <h1>
+    <h2>Status {{ status }}</h2>
+    <form method="post" name="user" action="/settings">
+      <label for="username">Username:</label>
+      <input type="text" name="change" />
+      <input type="submit" value="change username" />
+      <input hidden name="type" value="name">
+    </form>
+    <br />
+    <form method="post" name="password">
+      <label for="password">Password:</label>
+      <input type="password"  name="change"/>
+      <input type="submit" value="change password" />
+      <input hidden name="type" value="password">
+    </form>
+      <br />
+    <form method="post">
+      <label for="openai key">openai key:</label>
+      <input type="password" id="name" name="change"/>
+      <input type="submit"  value="change key" />
+      <input hidden name="type" value="openai_key">
+    </form>
+    <br />
+    <form name="chat" method="post">
+        <input type="submit" name="chat" value="Done">
+    </form>
+</body>
+</html>
