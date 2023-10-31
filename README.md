@@ -40,3 +40,4 @@ flask --app app.py --debug run
 ## Things to keep in mind - Testing (May be moved to another doc file later)
 
 - When adding routes, making sure to prevent keyerrors and unwanted access-redirects
+- If you have the OPEN_AI_KEY in .env, it will override session variables
