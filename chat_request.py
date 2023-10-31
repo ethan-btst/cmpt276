@@ -44,7 +44,7 @@ def text_request(user_in,instructions,type,api_key,file,test_toggle):
        return "Not a valid key"
 
     if(instructions == ''):
-        instructions = "Summarize this video transcript in 200 words "
+        instructions = "Summarize this transcript in 200 words: "
 
     if(type == "text"):
         prompt = user_in
@@ -53,7 +53,7 @@ def text_request(user_in,instructions,type,api_key,file,test_toggle):
         try:
             transcript = YouTubeTranscriptApi.get_transcript(user_in)
             formatter = TextFormatter()
-            prompt = formatter.format_transcript(transcript)[0:3500]
+            prompt = formatter.format_transcript(transcript)
         except:
             return "Invalid youtube id"
    
@@ -83,7 +83,7 @@ def text_request(user_in,instructions,type,api_key,file,test_toggle):
         a_file = io.BytesIO(file.read())
         a_file.name = file.filename
 
-        prompt = openai.Audio.transcribe(model='whisper-1',file=a_file,response_format="text")[0:4500]
+        prompt = openai.Audio.transcribe(model='whisper-1',file=a_file,response_format="text")
 
     elif("pdf/text file"):
         if file.filename == '':
@@ -110,11 +110,12 @@ def text_request(user_in,instructions,type,api_key,file,test_toggle):
     if test_toggle:
         return instructions + prompt
     
-    response = openai.Completion.create(
-        model="text-davinci-003",
-        prompt = instructions + prompt,
-        temperature=0.6,
-        max_tokens=200,
+
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "user", "content":instructions + prompt[0:10000]}
+        ]
     )
 
-    return(response.choices[0].text)
+    return response.choices[0].message["content"]
