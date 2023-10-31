@@ -12,7 +12,7 @@ from PyPDF2 import PdfReader
 
 load_dotenv()
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+# openai.api_key = os.getenv("OPENAI_API_KEY")
 rapidapi_key = os.getenv("RAPIDAPI_KEY")
 
 AUDIO_FORMATS = ['flac', 'm4a', 'mp3', 'mp4', 'mpeg', 'mpga', 'oga', 'ogg', 'wav', 'webm']
@@ -41,7 +41,7 @@ def text_request(user_in,instructions,type,api_key,file,test_toggle):
 
     # Check the key
     if(not is_api_key_valid()):
-       return "Not a valid key"
+       return "Not a valid key. Head to settings to change your OpenAI Key."
 
     if(instructions == ''):
         instructions = "Summarize this transcript in 200 words: "

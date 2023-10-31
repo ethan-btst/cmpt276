@@ -29,19 +29,6 @@
       </ul>
     </div>
 
-    <!--
-    <nav class="NBar">
-        <div class="NBarDiv">
-            <div class="TxTOnBar"><a>Project Name </a> </div>
-            <u1>
-                <li><a href="#">Text</a></li>
-                <li><a href="#">Youtube Video</a></li>
-                <li><a href="#">Audio</a></li>
-                <li><a href="#">Other</a></li>
-            </u1>
-        </div>
-    </nav>
--->
     <!-- Little Background design-->
 
     <!-- Login stuff -->
@@ -60,8 +47,8 @@
 
     <!-- Way to interact with chat gpt -->
     <form action="/chat" method="post" enctype=multipart/form-data>
-        Hello {{userResponse}}, enter your API key
-        <input type="text" name="api_key" /><br />
+        <!-- Hello {{userResponse}}, enter your API key
+        <input type="text" name="api_key" /><br /> -->
 
         <!-- Button generation to select type -->
         <div>
@@ -71,7 +58,7 @@
             <input hidden type="text" id="type" name="type" value={{ type }}>
         </div>
         
-          <textarea rows="4" cols="50" name="chatbox" placeholder="Instructions for ChatGPT"></textarea>
+          <textarea rows="4" cols="50" name="chatbox" placeholder="Optional customizable instructions for ChatGPT"></textarea>
           <label for="user input" id="input label">Text</label>
 
           {% if type in file_buttons %}
