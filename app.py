@@ -82,7 +82,9 @@ def update_user_info(data,data_type,user_id):
 
                 else:
                     cursor.execute("UPDATE users SET %s = '%s' where id = %s;" % (data_type,data,user_id))
-                    status = data_type + ' changed'
+                    if (data_type == 'openai_key'):
+                        session['openai_key'] = data
+                    status = data_type + ' changed to' + data
 
     connection.close()
     return status
