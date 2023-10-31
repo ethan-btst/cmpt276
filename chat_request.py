@@ -12,7 +12,7 @@ from PyPDF2 import PdfReader
 
 load_dotenv()
 
-# openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_key = os.getenv("OPENAI_API_KEY")
 rapidapi_key = os.getenv("RAPIDAPI_KEY")
 
 AUDIO_FORMATS = ['flac', 'm4a', 'mp3', 'mp4', 'mpeg', 'mpga', 'oga', 'ogg', 'wav', 'webm']
