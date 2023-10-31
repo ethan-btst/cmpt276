@@ -19,30 +19,13 @@
       <ul>
         <!-- <div class="Name"><a>In a Nutshell</a></div> -->
 
-        <li><a href="#"> Home </a></li>
+        <!-- <li><a href="#"> Contact Us </a></li> -->
         <li>
-          <a href="#"> Tools &#x25BE; </a>
-          <ul class="dropdown1">
-            <li><a href="#"> Text File </a></li>
-            <li><a href="#"> Youtube Video </a></li>
-            <li><a href="#"> Audio File </a></li>
-          </ul>
+          <a href="{{ url_for('chat') }}">Home</a>
         </li>
-
         <li>
-          <a href="#"> About Us &#x25BE; </a>
-
-          <ul class="dropdown2">
-            <li><a href="#"> Vincent </a></li>
-            <li><a href="#"> Ethan </a></li>
-            <li><a href="#"> Iain</a></li>
-            <li><a href="#"> Hugo</a></li>
-            <li><a href="#"> Darren</a></li>
-            <li><a href="#"> Alex</a></li>
-          </ul>
+          <a href="{{ url_for('settings') }}">Settings</a>
         </li>
-
-        <li><a href="#"> Contact Us </a></li>
       </ul>
     </div>
 

@@ -6,6 +6,19 @@
     <title>Settings</title>
 </head>
 <body>
+    <div class="Navbar">
+      <ul>
+        <!-- <div class="Name"><a>In a Nutshell</a></div> -->
+
+        <!-- <li><a href="#"> Contact Us </a></li> -->
+        <li>
+          <a href="{{ url_for('chat') }}">Home</a>
+        </li>
+        <li>
+          <a href="{{ url_for('settings') }}">Settings</a>
+        </li>
+      </ul>
+    </div>
     <h1>Change user stuff <h1>
     <h2>Status {{ status }}</h2>
     <form method="post" name="user" action="/settings">

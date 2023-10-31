@@ -180,7 +180,8 @@ def login():
 
         # Add relevent user data to session
         session['username'] = username
-        session['openai_key'] = get_user_info('openai_key','name',username)
+        # session['openai_key'] = get_user_info('openai_key','name',username)
+        # session['openai_key'] = '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'
         session['user_id'] = get_user_info('id','name',username)
 
         # Redirect to a new page on successful login
