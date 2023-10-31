@@ -20,9 +20,9 @@ app.config['SESSION_TYPE'] = 'filesystem'
 url = os.environ.get("DATABASE_URL")  # gets db variable 
 
 CREATE_USERS_TABLE = (
-    "CREATE TABLE IF NOT EXISTS users (id SERIAL PRIMARY KEY, name TEXT, password TEXT);"
+    "CREATE TABLE IF NOT EXISTS users (id SERIAL PRIMARY KEY, name TEXT, password TEXT, openai_key TEXT);"
 )
-INSERT_USER = "INSERT INTO users (name, password) VALUES (%s, %s);"
+INSERT_USER = "INSERT INTO users (name, password, openai_key) VALUES (%s, %s, %s);"
 USERS = (
     """SELECT * FROM users;"""
 )
@@ -30,12 +30,21 @@ USERS = (
 Session(app)
 
 @app.post("/api/users")
-def create_users(username, password):
+def create_users():
     connection = psycopg2.connect(url)
     with connection:
         with connection.cursor() as cursor:
             cursor.execute(CREATE_USERS_TABLE)
-            cursor.execute(INSERT_USER, (username,password))
+    
+    connection.close()
+    return {"users table created."}, 201
+@app.post("/api/users")
+def insert_users(username, password, openai_key):
+    connection = psycopg2.connect(url)
+    with connection:
+        with connection.cursor() as cursor:
+            cursor.execute(CREATE_USERS_TABLE)
+            cursor.execute(INSERT_USER, (username,password, openai_key))
     
     connection.close()
     return {"message": f"USER {username} created."}, 201
@@ -111,6 +120,7 @@ def notfound(e):
 # Homepage, redirects to login page
 @app.route('/')
 def index():
+    create_users()
     return render_template('login.html')
 
 # Signup page
@@ -120,6 +130,7 @@ def signup():
         # Handle the login form submission
         username = request.form['username']
         password = request.form['password']
+        openai_key = request.form['openai_key']
         error_message = ''
         if len(username) < 1 or len(password) < 1: # Still tested in case of post sneaky post requests (outside of the html form)
             error_message ='tries to sign up with empty field' 
@@ -133,9 +144,10 @@ def signup():
             print('caught error')
             return render_template('signup.html', error_message=error_message)
 
-        create_users(username, password)
+        insert_users(username, password, openai_key)
         # Redirect to a new page on successful login
         session['username'] = username
+        session['openai_key'] = openai_key
         session['type'] = 'text'
         return redirect(url_for('chat'))
 
@@ -180,8 +192,7 @@ def login():
 
         # Add relevent user data to session
         session['username'] = username
-        # session['openai_key'] = get_user_info('openai_key','name',username)
-        # session['openai_key'] = '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'
+        session['openai_key'] = get_user_info('openai_key','name',username)
         session['user_id'] = get_user_info('id','name',username)
 
         # Redirect to a new page on successful login
