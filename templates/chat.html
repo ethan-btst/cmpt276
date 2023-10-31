@@ -58,7 +58,7 @@
             <input hidden type="text" id="type" name="type" value={{ type }}>
         </div>
         
-          <textarea rows="4" cols="50" name="chatbox" placeholder="Optional customizable instructions for ChatGPT"></textarea>
+          <textarea rows="4" cols="50" name="chatbox" placeholder="Optional customizable instructions for ChatGPT. E.g. 'Also give a rough estimate of how confident you are in your prompt as a percetage. E.g. Summarize into 5 bullet points"></textarea>
           <label for="user input" id="input label">Text</label>
 
           {% if type in file_buttons %}
@@ -80,7 +80,6 @@
 
     <h4>Notes</h4>
     <p id="usage notes"></p>
-    <a href="{{ url_for('settings') }}">Settings</a>
     <script src="../static/js/chat.js"></script>
     <script src="js/script.js"></script>
   </body>
