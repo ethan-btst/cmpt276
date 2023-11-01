@@ -3,13 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../static/css/404.css" />
+
     <title>404</title>
   </head>
-  <body>
-    <h1>404 page not found</h1>
-    <a href="{{ url_for('chat') }}"> <!-- I think both don't work?? -->
-    <!-- <a href={{ url_for("chat") }}> -->
-
-    <p>click here to return to chat</p>
-  </body>
+<body>
+  <div id="container">
+    <div class="content">
+      <h2>404</h2>
+      <h4>Oops! Page not found...</h4>
+      <p>The page you are looking for doesn't exist. Please insure the 
+        address is typed correctly or the page has been moved.</p>
+        <a href="#"> Back To Home</a>
+    </div>
+  </div>
+</body>
 </html>
