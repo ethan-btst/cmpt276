@@ -11,19 +11,35 @@
     <form method="post" action="/login">
       <!-- Input fields for username and password -->
       <label for="username">Username:</label>
-      <input type="text" id="username" name="username" required />
+      <input type="text" id="username" name="username" required placeholder="Enter your username"/>
       <br />
       <label for="password">Password:</label>
-      <input type="password" id="password" name="password" required />
+      <input type="password" id="password" name="password" required placeholder="Enter your password"/>
       <br />
+      <div class="check" >
+        <input type="checkbox" name="remember>">
+        <label for="remember">Remember me?</label>
+      </div>
+
+
+
       <input type="submit" value="Login" id="loginButton" />
     </form>
+
+          
+      <!-- Changed "Register here" button to a hyperlink -->
+    <p>Don't have an account? <a href="#">Sign up here</a></p>
+    </div>
+    <script src="../static/js/loginscript.js"></script>
+
+    <!--
     <form method="GET" action="/signup">
       <input id="search-btn" type="submit" value="Signup Instead" />
     </form>
 
     </div>
     <script src="../static/js/loginscript.js"></script>
+  -->
 
     <!-- Optionally, you can include a link to the registration page -->
     <!-- <p>Don't have an account? <a href="/register">Register here</a></p> -->
