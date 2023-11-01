@@ -1,55 +1,83 @@
-body{
-    background-color: orange ;
-    min-height: 100vh;  
-    padding: 0%;
-    margin: 0%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+*{
+    margin:0px;
+    padding:0px;
+    box-sizing: border-box;
+    font-family: 'Raleway', sans-serif;
+
+}
+
+
+.wrapper{
+    margin:50px auto;
+    max-width: 500px;
+    background-color: #fff;
+    padding:30px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+    animation: dropFadeIn 0.5s ease-in-out;
+}
+
+@keyframes dropFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+h1{
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 30px;
 }
 
 form{
-    display: grid;
-    font-size: 1.25rem;
+    display: flex;
+    flex-direction: column;
+
 }
 
-#loginButton{
-    width: 50%;
-    margin: 10px auto;
-    align-self: center;
-    background-color: white;
-    color: black;
-    transition: 0.25s ease;
+label{
+    font-size: 18px;
+    margin-bottom: 5px;
 }
 
-#loginButton:hover{
-    background-color: black;
-    color: white;
+input[type= "text"],
+input[type= "password"]{
+    padding: 10px;
+    margin-bottom: 20px;
+    border:none;
+    border-radius: 5px;
+    font-size: 16px;
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
+
+}
+.check{
+    margin-bottom: 10px;
 }
 
-#search-btn{
-    width: 50%;
-    margin: 10px auto;
-    align-self: center;
-    background-color: white;
-    color: black;
-    transition: 0.25s ease;
+.check label{
+    margin-top: 5px;
 }
 
-#search-btn:hover{
-    background-color: black;
-    color: white;
+input[type= "submit"]{
+    padding:10px;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 18px;
+    background-color: #007bff;
+    cursor: pointer;
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
+    
 }
 
-#search-btn{
-    width: 50%;
-    margin: 10px auto;
-    align-self: center;
+input[type= "submit"]:hover{
+    background-color: #0062cc;
 }
 
-.wrapper{
-    border: 1px solid black;
-    background-color: grey;
-    padding: 7rem 7rem;
+p{
+    margin-top: 5px;
 }
