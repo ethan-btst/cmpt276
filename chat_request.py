@@ -12,7 +12,6 @@ from PyPDF2 import PdfReader
 
 load_dotenv()
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
 rapidapi_key = os.getenv("RAPIDAPI_KEY")
 
 AUDIO_FORMATS = ['flac', 'm4a', 'mp3', 'mp4', 'mpeg', 'mpga', 'oga', 'ogg', 'wav', 'webm']
@@ -36,15 +35,23 @@ def text_request(user_in,instructions,type,api_key,file,test_toggle):
     # Checks for environment variables
     # If you have .env and an API key you don't need to manually insert
     # Otherwise, get from the website
-    if(os.getenv("OPENAI_API_KEY")==None):
-        openai.api_key = api_key
 
-    # Check the key
+    # User provided key
+    openai.api_key = api_key
+
+    # Check the user provided key
+    # Defaults to .env key 
     if(not is_api_key_valid()):
-       return "Not a valid key. Head to settings to change your OpenAI Key."
+        return "Bad user key"
+        openai.api_key = os.getenv("OPENAI_API_KEY")
+
+    # Checks .env key
+    # Will be removed to force users to use their own key
+    if(not is_api_key_valid()):
+        return "Not a valid key. Head to settings to change your OpenAI Key."
 
     if(instructions == ''):
-        instructions = "Summarize this transcript in 200 words: "
+        instructions = "Summarize this in 200 words: "
 
     if(type == "text"):
         prompt = user_in
