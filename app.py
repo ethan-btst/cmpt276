@@ -278,14 +278,12 @@ def chat():
             instructions = request.form["chatbox"]
             user_in = request.form["user input"]
             session["type"] = request.form["type"]
-            # api_key = request.form["api_key"]
-            api_key = session['openai_key']
             
             session["current_response"] = text_request(
                 user_in,
                 instructions,
                 session['type'],
-                api_key,
+                session['openai_key'],
                 file,
                 test_toggle
             )
