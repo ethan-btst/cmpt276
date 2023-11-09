@@ -16,6 +16,7 @@ load_dotenv()
 rapidapi_key = os.getenv("RAPIDAPI_KEY")
 
 AUDIO_FORMATS = ['flac', 'm4a', 'mp3', 'mp4', 'mpeg', 'mpga', 'oga', 'ogg', 'wav', 'webm']
+client = OpenAI()
 
 # Test function to check if api key is valid
 def not_valid_key():
@@ -60,7 +61,7 @@ def audio_prompt(file):
     a_file = io.BytesIO(file.read())
     a_file.name = file.filename
 
-    return openai.audio.transcriptions.create(
+    return client.audio.transcriptions.create(
         model="whisper-1", 
         file=a_file, 
         response_format="text"
@@ -91,9 +92,7 @@ def pdf_text_prompt(file):
 
 # Takes a request and gets chat gpt to respond
 def text_request(user_in,instructions,type,api_key,file,test_toggle):
-
-    client = OpenAI(api_key=api_key)
-
+    client.api_key = api_key
     if(instructions == ''):
         instructions = "Summarize this in 200 words: "
 
