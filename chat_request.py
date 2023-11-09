@@ -1,4 +1,5 @@
 import openai
+from openai import OpenAI
 import os
 import io
 from dotenv import load_dotenv
@@ -19,11 +20,9 @@ AUDIO_FORMATS = ['flac', 'm4a', 'mp3', 'mp4', 'mpeg', 'mpga', 'oga', 'ogg', 'wav
 # Test function to check if api key is valid
 def not_valid_key():
     try:
-        response = openai.Completion.create(
-            engine="davinci",
-            prompt="This is a test.",
-            max_tokens=5
-        )
+        response = client.completions.create(engine="davinci",
+        prompt="This is a test.",
+        max_tokens=5)
     except:
         return True
     else:
@@ -65,8 +64,7 @@ def audio_prompt(file):
         model="whisper-1", 
         file=a_file, 
         response_format="text"
-        )
-    # return openai.Audio.transcribe(model='whisper-1',file=a_file,response_format="text")
+    )
 
 def pdf_text_prompt(file):
     if file.filename == '':
@@ -93,11 +91,8 @@ def pdf_text_prompt(file):
 
 # Takes a request and gets chat gpt to respond
 def text_request(user_in,instructions,type,api_key,file,test_toggle):
-    openai.api_key = api_key
 
-
-    if(not_valid_key()):
-        openai.api_key = os.getenv("OPENAI_API_KEY")
+    client = OpenAI(api_key=api_key)
 
     if(instructions == ''):
         instructions = "Summarize this in 200 words: "
@@ -128,13 +123,12 @@ def text_request(user_in,instructions,type,api_key,file,test_toggle):
         return instructions + prompt
     
     try:
-        response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
-                messages=[
-                {"role": "user", "content":instructions + prompt[0:10000]}
-                ]
-        )
+        response = client.chat.completions.create(model="gpt-3.5-turbo",
+        messages=[
+        {"role": "user", "content":instructions + prompt[0:10000]}
+        ])
     
     except:
-        return "Invalid key"
-    return response.choices[0].message["content"]
+        return "Sorry, something went wrong"
+
+    return response.choices[0].message.content
