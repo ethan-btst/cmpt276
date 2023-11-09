@@ -61,7 +61,12 @@ def audio_prompt(file):
     a_file = io.BytesIO(file.read())
     a_file.name = file.filename
 
-    return openai.Audio.transcribe(model='whisper-1',file=a_file,response_format="text")
+    return openai.audio.transcriptions.create(
+        model="whisper-1", 
+        file=a_file, 
+        response_format="text"
+        )
+    # return openai.Audio.transcribe(model='whisper-1',file=a_file,response_format="text")
 
 def pdf_text_prompt(file):
     if file.filename == '':
