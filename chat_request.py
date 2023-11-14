@@ -14,9 +14,9 @@ from PyPDF2 import PdfReader
 load_dotenv()
 
 rapidapi_key = os.getenv("RAPIDAPI_KEY")
-
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"),)
 AUDIO_FORMATS = ['flac', 'm4a', 'mp3', 'mp4', 'mpeg', 'mpga', 'oga', 'ogg', 'wav', 'webm']
-client = OpenAI()
+
 
 # Test function to check if api key is valid
 def not_valid_key():
@@ -92,7 +92,7 @@ def pdf_text_prompt(file):
 
 # Takes a request and gets chat gpt to respond
 def text_request(user_in,instructions,type,api_key,file,test_toggle):
-    client.api_key = api_key
+
     if(instructions == ''):
         instructions = "Summarize this in 200 words: "
 
