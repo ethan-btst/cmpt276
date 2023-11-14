@@ -155,6 +155,12 @@ def signup():
 
     return render_template('signup.html')
 
+# Logout portion
+@app.route('/logout', methods=['GET'])
+def logout():
+    session.clear()
+    return redirect(url_for('login'))
+
 # Login page
 @app.route('/login', methods=['GET', 'POST'])
 def login():
