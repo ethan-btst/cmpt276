@@ -1,0 +1,19 @@
+name: deploy on pythonanywhere.com
+on: [push]
+jobs:
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        script: |
+          cd cmpt276
+          git pull
+          touch  /var/www/cmpt276-ethanbtst_pythonanywhere_com_wsgi.py
