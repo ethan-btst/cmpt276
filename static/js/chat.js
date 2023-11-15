@@ -7,9 +7,9 @@ const usage_notes ={
     "text" : "General chatgpt request, need to write<br>"+
              "example: 'Summarize the bible'",
 
-    "youtube" : "Use only the the youtube id <br> " + 
+    "youtube" : "Use either the entire link or just the youtube video ID " + 
                 "example: \"www.youtube.com/watch?v=bBQVR4epfBQ&pp=ygUScGVydW4gcmVxdWlyZW1lbnRz\" <br> " +
-                "becomes: \"bBQVR4epfBQ&pp=ygUScGVydW4gcmVxdWlyZW1lbnR\"",
+                "or just \"bBQVR4epfBQ&pp=ygUScGVydW4gcmVxdWlyZW1lbnR\"",
 
     "article" : "Only applicable to CNN articles as of now",
 }

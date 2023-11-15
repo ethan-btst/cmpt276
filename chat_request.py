@@ -103,6 +103,13 @@ def text_request(user_in,instructions,type,api_key,file,test_toggle):
 
     elif(type == "youtube"):
         try:
+            url_or_id = user_in
+            if '=' in url_or_id:
+                index_of_equal = url_or_id.find('=')
+                user_in = url_or_id[index_of_equal + 1:]
+            else:
+                user_in = url_or_id
+            print(user_in)
             prompt = youtube_prompt(user_in)
         except:
             return "Invalid youtube id"

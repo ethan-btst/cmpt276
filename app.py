@@ -148,6 +148,7 @@ def signup():
         insert_users(username, password)
         # Redirect to a new page on successful login
         session['username'] = username
+        session['openai_key'] = '' 
         session['type'] = 'text'
         return redirect(url_for('chat'))
 
