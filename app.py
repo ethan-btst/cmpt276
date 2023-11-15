@@ -298,7 +298,7 @@ def chat():
     try:
         models = openai.OpenAI(api_key=session['openai_key']).models.list()
     except:
-        models = []
+        models = 'Not valid'
     # Display result to page
     if request.method == "GET":
         return render_template("chat.html",
