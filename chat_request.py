@@ -25,8 +25,10 @@ def not_valid_key():
         prompt="This is a test.",
         max_tokens=5)
     except:
+        print('invalid key')
         return True
     else:
+        print('valid key')
         return False
 
 # Prompt generators

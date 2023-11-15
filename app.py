@@ -39,12 +39,12 @@ def create_users():
     connection.close()
     return {"users table created."}, 201
 @app.post("/api/users")
-def insert_users(username, password, openai_key):
+def insert_users(username, password):
     connection = psycopg2.connect(url)
     with connection:
         with connection.cursor() as cursor:
             cursor.execute(CREATE_USERS_TABLE)
-            cursor.execute(INSERT_USER, (username,password, openai_key))
+            cursor.execute(INSERT_USER, (username,password, ''))
     
     connection.close()
     return {"message": f"USER {username} created."}, 201
@@ -132,7 +132,6 @@ def signup():
         # Handle the login form submission
         username = request.form['username']
         password = request.form['password']
-        openai_key = request.form['openai_key']
         error_message = ''
         if len(username) < 1 or len(password) < 1: # Still tested in case of post sneaky post requests (outside of the html form)
             error_message ='tries to sign up with empty field' 
@@ -146,10 +145,9 @@ def signup():
             print('caught error')
             return render_template('signup.html', error_message=error_message)
 
-        insert_users(username, password, openai_key)
+        insert_users(username, password)
         # Redirect to a new page on successful login
         session['username'] = username
-        session['openai_key'] = openai_key
         session['type'] = 'text'
         return redirect(url_for('chat'))
 
