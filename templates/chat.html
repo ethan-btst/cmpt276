@@ -60,8 +60,9 @@
             {% endfor %}
             <input hidden type="text" id="type" name="type" value={{ type }}>
         </div>
-        
-          <textarea rows="4" cols="50" name="chatbox" placeholder="Optional customizable instructions for ChatGPT. E.g. 'Also give a rough estimate of how confident you are in your prompt as a percetage. E.g. Summarize into 5 bullet points"></textarea>
+          <br>
+          <label for="chatbox">Instructions for ChatGPT</label>
+          <textarea rows="4" cols="50" name="chatbox" placeholder="Default is 'summarize this in 200 words: '"></textarea>
           <label for="user input" id="input label">Text</label>
 
           {% if type in file_buttons %}
