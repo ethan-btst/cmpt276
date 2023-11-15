@@ -2,33 +2,45 @@
 <html>
   <head>
     <title>Login</title>
-    <link rel="stylesheet" href="../static/css/login.css">
+    <link rel="stylesheet" href="../static/css/login.css" />
   </head>
   <body>
     <div class="wrapper">
-    <h1>Login {{error_message}}</h1>
+      <h1>Login {{error_message}}</h1>
 
-    <form method="post" action="/login">
-      <!-- Input fields for username and password -->
-      <label for="username">Username:</label>
-      <input type="text" id="username" name="username" required placeholder="Enter your username"/>
-      <br />
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" required placeholder="Enter your password"/>
-      <br />
-      <div class="check" >
-        <input type="checkbox" name="remember>">
-        <label for="remember">Remember me?</label>
-      </div>
+      <form method="post" action="/login">
+        <!-- Input fields for username and password -->
+        <label for="username">Username:</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          required
+          placeholder="Enter your username"
+        />
+        <br />
+        <label for="password">Password:</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          required
+          placeholder="Enter your password"
+        />
+        <br />
+        <div class="check">
+          <input type="checkbox" name="remember>" />
+          <label for="remember">Remember me?</label>
+        </div>
 
+        <input type="submit" value="Login" id="loginButton" />
+      </form>
 
-
-      <input type="submit" value="Login" id="loginButton" />
-    </form>
-
-          
       <!-- Changed "Register here" button to a hyperlink -->
-    <p>Don't have an account? <a href="#">Sign up here</a></p>
+      <p>
+        Don't have an account?
+        <a href="{{ url_for('signup') }}">Sign up here</a>
+      </p>
     </div>
     <script src="../static/js/loginscript.js"></script>
 
