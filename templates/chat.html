@@ -75,7 +75,8 @@
           <br>
 
           <label for="user model">Choose a ChatGPT model:</label>
-          <input list="models" id="user model" name="user model" value="gpt-3.5-turbo">
+          <input list="models" id="user model" name="user model" value="gpt-3.5-turbo" 
+          {% if models|length < 1 %} disabled="true" {% endif %}>
           <datalist id="models">
             {% for model in models %}
                 <option value="{{ model.id }}"></option>

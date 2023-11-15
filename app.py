@@ -295,8 +295,10 @@ def chat():
         else:
             session["current_response"] = ""
         return redirect(request.path)
-
-    models = openai.OpenAI(api_key=session['openai_key']).models.list()
+    try:
+        models = openai.OpenAI(api_key=session['openai_key']).models.list()
+    except:
+        models = []
     # Display result to page
     if request.method == "GET":
         return render_template("chat.html",
