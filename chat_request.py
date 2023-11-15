@@ -93,7 +93,7 @@ def pdf_text_prompt(file):
 
 
 # Takes a request and gets chat gpt to respond
-def text_request(user_in,instructions,type,api_key,file,test_toggle):
+def text_request(user_in,instructions,type,api_key,file,test_toggle,model):
 
     if(instructions == ''):
         instructions = "Summarize this in 200 words: "
@@ -131,7 +131,7 @@ def text_request(user_in,instructions,type,api_key,file,test_toggle):
         return instructions + prompt
     
     try:
-        response = client.chat.completions.create(model="gpt-3.5-turbo",
+        response = client.chat.completions.create(model=model,
         messages=[
         {"role": "user", "content":instructions + prompt[0:10000]}
         ])
