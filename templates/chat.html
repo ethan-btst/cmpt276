@@ -33,7 +33,7 @@
     </div>
 
     <!-- Little Background design-->
-
+:
     <!-- Login stuff -->
     <!-- Sessions should hold user api keys 
         instead of needing to input manually -->
@@ -72,7 +72,18 @@
           <input hidden type="file" name="file" id="file" accept=".txt, .pdf, .png, .jpg, .jpeg, .mp3">
           {% endif %}
 
-          
+          <br>
+
+          <label for="user model">Choose a ChatGPT model:</label>
+          <input list="models" id="user model" name="user model" value="gpt-3.5-turbo">
+          <datalist id="models">
+            {% for model in models %}
+                <option value="{{ model.id }}"></option>
+            {% endfor %}
+          </datalist>
+
+
+
           <br>
           <input type="checkbox" name="test submit"> Return prompt
           <br><br><br>

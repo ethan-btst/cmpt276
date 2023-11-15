@@ -4,7 +4,7 @@ import psycopg2
 from flask import Flask
 from flask import *
 from chat_request import text_request
-
+import openai
 from flask_session import Session
 
 app = Flask(__name__)
@@ -280,23 +280,23 @@ def chat():
             else:
                 test_toggle = False
 
-            instructions = request.form["chatbox"]
-            user_in = request.form["user input"]
             session["type"] = request.form["type"]
             
             session["current_response"] = text_request(
-                user_in,
-                instructions,
+                request.form["user input"],
+                request.form["chatbox"],
                 session['type'],
                 session['openai_key'],
                 file,
-                test_toggle
+                test_toggle,
+                request.form["user model"]
             )
 
         else:
             session["current_response"] = ""
         return redirect(request.path)
 
+    models = openai.OpenAI(api_key=session['openai_key']).models.list()
     # Display result to page
     if request.method == "GET":
         return render_template("chat.html",
@@ -305,6 +305,13 @@ def chat():
         buttons=buttons,
         file_buttons = file_buttons,
         type=session['type'],
+        models = models
         )
 
-    return render_template("chat.html", userResponse=session['username'],buttons=buttons,type=session['type'])
+    return render_template(
+        "chat.html",
+         userResponse=session['username'],
+         buttons=buttons,
+         type=session['type'],
+         models = models
+         )
