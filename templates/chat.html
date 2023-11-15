@@ -74,14 +74,19 @@
 
           <br>
 
+          {% if models != "Not valid"  %}
           <label for="user model">Choose a ChatGPT model:</label>
-          <input list="models" id="user model" name="user model" value="gpt-3.5-turbo" {% if models == "Not valid"  %} disabled="true" {% endif %}>
+          <input list="models" id="user model" name="user model" value="gpt-3.5-turbo">
           <datalist id="models">
-            {% for model in models %}
-                <option value="{{ model.id }}"></option>
-            {% endfor %}
+          {% for model in models %}
+            <option value="{{ model.id }}"></option>
+          {% endfor %}
           </datalist>
 
+          {% else %}
+            <input type="text" hidden="true" name="user model" value="gpt-3.5-turbo">
+
+          {% endif %}
 
 
           <br>
