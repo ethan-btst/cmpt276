@@ -27,6 +27,13 @@ USERS = (
     """SELECT * FROM users;"""
 )
 
+INVALID_MODELS = []
+file = open("invalid models.txt",'r')
+lines = file.readlines()
+for line in lines:
+    INVALID_MODELS.append(line.strip('\n'))
+file.close()
+
 Session(app)
 
 @app.post("/api/users")
@@ -297,6 +304,7 @@ def chat():
         return redirect(request.path)
     try:
         models = openai.OpenAI(api_key=session['openai_key']).models.list()
+        models = [model.id for model in models if model.id not in INVALID_MODELS]
     except:
         models = 'Not valid'
     # Display result to page
