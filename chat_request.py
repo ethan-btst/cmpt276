@@ -123,7 +123,7 @@ def text_request(user_in,instructions,type,api_key,file,test_toggle,model):
     elif(type == "audio file"):
         prompt = audio_prompt(file)
 
-    elif("pdf/text file"):
+    elif(type == "pdf/text file"):
         prompt = pdf_text_prompt(file)
 
     # Test case without chatgpt request
