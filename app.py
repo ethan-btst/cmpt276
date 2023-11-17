@@ -255,8 +255,8 @@ def settings():
 
 
 # Add buttons here to the list
-buttons = ["text","youtube","article","audio file","pdf/text file"]
-file_buttons = ["audio file","pdf/text file"]
+file_buttons = ["audio file","pdf file","plain text"]
+buttons = ["text","youtube","article"] + file_buttons
 
 # Page for chat
 @app.route('/chat',methods=("GET","POST"))
@@ -323,5 +323,6 @@ def chat():
          userResponse=session['username'],
          buttons=buttons,
          type=session['type'],
-         models = models
+         models = models,
+         file_buttons = file_buttons
          )

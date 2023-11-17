@@ -22,7 +22,11 @@ const input_text ={
     "article" : "Insert CNN article",
 }
 
-const file_inputs = ["audio file","pdf/text file"]
+var file_inputs_element = document.getElementById("file types")
+var file_inputs = []
+for (var i = 0; i < file_inputs_element.options.length;i++){
+    file_inputs = file_inputs + file_inputs_element.options[i].innerHTML
+}
 // Changes usage notes
 var request_type_list = document.getElementsByTagName("button")
 

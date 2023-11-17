@@ -67,11 +67,18 @@
 
           {% if type in file_buttons %}
           <input hidden type="text" id="user input" name="user input" placeholder="What should be summarized">
-          <input type="file" name="file" id="file" accept=".txt, .pdf, .png, .jpg, .jpeg, .mp3">
+          <input type="file" name="file" id="file">
           {% else %}
           <input type="text" id="user input" name="user input" placeholder="What should be summarized">
-          <input hidden type="file" name="file" id="file" accept=".txt, .pdf, .png, .jpg, .jpeg, .mp3">
+          <input hidden type="file" name="file" id="file">
           {% endif %}
+          
+          <datalist id="file types">
+            {% for button in file_buttons %}
+                <option>{{ button }}</option>
+            {% endfor %}
+          </datalist>
+
 
           <br>
 
@@ -98,6 +105,5 @@
     <h4>Notes</h4>
     <p id="usage notes"></p>
     <script src="../static/js/chat.js"></script>
-    <script src="js/script.js"></script>
   </body>
 </html>

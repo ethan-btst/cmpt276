@@ -53,13 +53,6 @@ def article_prompt(link):
     return articleContent
     
 def audio_prompt(file):
-    if file.filename == '':
-        return "No file"
-
-    filetype = file.filename.rsplit('.',1)[1]
-    if filetype not in AUDIO_FORMATS:
-        return "Invalid file type, must be " + str(AUDIO_FORMATS)
-
     a_file = io.BytesIO(file.read())
     a_file.name = file.filename
 
@@ -70,26 +63,24 @@ def audio_prompt(file):
     )
 
 def pdf_text_prompt(file):
-    if file.filename == '':
-        return "No file"
+    a_file = io.BytesIO(file.read())
+    a_file.name = file.filename
+    
+    reader = PdfReader(a_file)
+    prompt = ''
+    for i in reader.pages:
+        prompt += i.extract_text()
 
-    filetype = file.filename.rsplit('.',1)[1]
-    if filetype not in ["pdf","txt"]:
-        return "Invalid file type, must be pdf or txt file"
+    return prompt
 
+def plain_text_prompt(file):
     a_file = io.BytesIO(file.read())
     a_file.name = file.filename
 
-    if filetype == 'txt':
-        prompt = str(a_file.read())
 
-    else:
-        reader = PdfReader(a_file)
-        prompt = ''
-        for i in reader.pages:
-            prompt += i.extract_text()
+    prompt = a_file.read().decode("utf-8")
 
-    return prompt
+    return prompt 
 
 
 # Takes a request and gets chat gpt to respond
@@ -120,11 +111,35 @@ def text_request(user_in,instructions,type,api_key,file,test_toggle,model):
         except:
             return "Invalid link"
 
-    elif(type == "audio file"):
-        prompt = audio_prompt(file)
+    elif file.filename == '':
+        return "No file provided"
 
-    elif(type == "pdf/text file"):
-        prompt = pdf_text_prompt(file)
+    elif(type == "audio file"):
+        filetype = file.filename.rsplit('.',1)[1]
+        if filetype not in AUDIO_FORMATS:
+            return "Invalid file type, must be " + str(AUDIO_FORMATS)
+
+        try:
+            prompt = audio_prompt(file)
+        
+        except:
+            return 'Invalid audio file'
+
+    elif(type == "pdf file"):
+        try:
+            prompt = pdf_text_prompt(file)
+
+        except:
+            return 'Must be a pdf file with embedded text'
+
+    elif(type == 'plain text'):
+        try:
+            prompt = str(plain_text_prompt(file))
+        except:
+            return 'Must be a plain text file'
+
+    else:
+        prompt = 'No file chosen'
 
     # Test case without chatgpt request
     if test_toggle:
