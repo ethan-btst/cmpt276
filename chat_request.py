@@ -139,7 +139,7 @@ def text_request(user_in,instructions,type,api_key,file,test_toggle,model):
             return 'Must be a plain text file'
 
     else:
-        prompt = 'No file chosen'
+        return'No file chosen'
 
     # Test case without chatgpt request
     if test_toggle:
