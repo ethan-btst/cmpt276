@@ -1,19 +1,54 @@
-*{
-    margin:0px;
-    padding:0px;
+* {
+    margin: 0px;
+    padding: 0px;
     box-sizing: border-box;
     font-family: 'Raleway', sans-serif;
-
 }
 
+html, body {
+    height: 100%;
+}
 
-.wrapper{
-    margin:50px auto;
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    background: linear-gradient(90deg, #2b9c4d79, #23792e63);
+}
+
+.welcome-container {
+    text-align: center;
+    margin-bottom: 20px; /* Adjust as needed */
+}
+
+.wrapper {
+    margin: 0 auto;
     max-width: 500px;
     background-color: #fff;
-    padding:30px;
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+    padding: 30px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
     animation: dropFadeIn 0.5s ease-in-out;
+    border-radius: 10px; /* Adjust the value to control the roundness of the corners */
+}
+
+h1 {
+    font-size: 36px;
+    margin-bottom: 20px; /* Adjust as needed */
+    text-shadow: 0px 0px 5px #fff; /* White glow effect */
+    animation: floatUp 1s ease-in-out; /* Floating-up animation */
+}
+
+@keyframes floatUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes dropFadeIn {
